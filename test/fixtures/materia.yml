@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  codigo: MyString
+  nombre: MyString
+  ciclo_lectivo: 1
+  descripcion: MyText
+  fecha_inicio: 2019-08-06
+  fecha_fin: 2019-08-06
+  autoarchivar: false
+  password: MyString
+  fecha_baja: 2019-08-06 21:32:26
+
+two:
+  codigo: MyString
+  nombre: MyString
+  ciclo_lectivo: 1
+  descripcion: MyText
+  fecha_inicio: 2019-08-06
+  fecha_fin: 2019-08-06
+  autoarchivar: false
+  password: MyString
+  fecha_baja: 2019-08-06 21:32:26

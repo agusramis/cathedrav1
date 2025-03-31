@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @enlace.nombre %>
+</p>
+
+<p>
+  <strong>Link enlace:</strong>
+  <%= @enlace.link_enlace %>
+</p>
+
+
+<%= link_to 'Edit', edit_enlace_path(@enlace) %> |
+<%= link_to 'Back', enlaces_path %>

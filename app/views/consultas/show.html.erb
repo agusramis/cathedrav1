@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Posicion video:</strong>
+  <%= @consulta.posicion_video %>
+</p>
+
+<p>
+  <strong>Fecha consulta:</strong>
+  <%= @consulta.fecha_consulta %>
+</p>
+
+<p>
+  <strong>Texto consulta:</strong>
+  <%= @consulta.texto_consulta %>
+</p>
+
+<p>
+  <strong>Vista consulta:</strong>
+  <%= @consulta.vista_consulta %>
+</p>
+
+<p>
+  <strong>Fecha respuesta:</strong>
+  <%= @consulta.fecha_respuesta %>
+</p>
+
+<p>
+  <strong>Texto respuesta:</strong>
+  <%= @consulta.texto_respuesta %>
+</p>
+
+<p>
+  <strong>Vista respuesta:</strong>
+  <%= @consulta.vista_respuesta %>
+</p>
+
+<%= link_to 'Edit', edit_consulta_path(@consulta) %> |
+<%= link_to 'Back', consultas_path %>

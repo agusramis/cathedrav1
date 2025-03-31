@@ -1,0 +1,21 @@
+<div class="content-heading">
+  <div>Nuevo Rol
+    <small>Crear un nuevo rol.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-title">Formulario Nuevo Rol</div>
+      <div class="text-sm">Ingresar los datos del nuevo rol.<span class="text-danger"> (Los campos marcados con * son obligatorios.)</span>
+        <hr>
+      </div>
+      <%#Card Body%>
+      <div class="card-body">
+        <%= render 'form', usuario: @rol %>
+      </div>
+    </div>
+  </div>
+</div>

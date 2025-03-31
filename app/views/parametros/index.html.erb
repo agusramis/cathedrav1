@@ -1,0 +1,61 @@
+<div class="content-heading">
+  <div>Par&aacute;metros
+    <small>Par&aacute;metros de configuraci&oacute;n.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <%#Card Body%>
+      <div class="card-body whirl standard" id="cardtablebody">
+        <div class="row">
+          <div class="col">
+          </div>
+        </div>
+        <div class="space-15">
+          <br>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped my-4 w-100" id="parametrostable">
+              <thead class>
+              <tr class>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Fecha Creación</th>
+                <th>Fecha Modificación</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @parametros.each do |parametro| %>
+                <tr>
+                  <td><%= parametro.id %></td>
+                  <td><%= parametro.nombre %></td>
+                  <td><%= parametro.descripcion %></td>
+                  <td><%= parametro.created_at %></td>
+                  <% if parametro.created_at == parametro.updated_at %>
+                    <td><%= "-" %></td>
+                  <% else %>
+                    <td><%= parametro.updated_at %></td>
+                  <% end %>
+                  <% if permitido?('parametros', 'edit') %>
+                    <td><%= link_to 'Editar', edit_parametro_path(parametro), class: "mb-1 btn btn-info" %></td>
+                  <% else %>
+                    <td><a class="mb-1 btn btn-info disabled">Editar</a></td>
+                  <% end %>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

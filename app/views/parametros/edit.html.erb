@@ -1,0 +1,28 @@
+<!--<h1>Editing Parametro</h1>-->
+
+<%#= render 'form', parametro: @parametro %>
+
+<!--<%#= link_to 'Show', @parametro %> |-->
+<%#= link_to 'Back', parametros_path %>
+
+<div class="content-heading">
+  <div>Editar Par&aacute;metro
+    <small>Editar un par&aacute;metro.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-title">Formulario Editar Par&aacute;metro</div>
+      <div class="text-sm">Ingresar el nuevo valor del par&aacute;metro.<span class="text-danger"> (Los campos marcados con * son obligatorios.)</span>
+        <hr>
+      </div>
+      <%#Card Body%>
+      <div class="card-body">
+        <%= render 'form', materia: @parametro %>
+      </div>
+    </div>
+  </div>
+</div>

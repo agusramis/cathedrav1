@@ -1,0 +1,15 @@
+<%= form_with model: consulta_respondida, url: responder_consultas_path, method: :post, class: 'form-horizontal col-12', local: true do |f| %>
+  <%#Agregado name porque sino cambia el nombre al ser llamado desde otra vista y no lo encuentra%>
+  <%#Automaticamente pone el nombre a consulta[clase_id] cuando deberia ser clase_id%>
+  <div class="form-group row">
+    <div class="col-8">
+      <%= f.text_area :texto_respuesta, class: 'form-control', placeholder: 'Ingresar respuesta', name: 'texto_respuesta', maxlength: "250", id: 'field_resp_'+consulta_respondida.clase.id.to_s, required: true %>
+    </div>
+    <%# if consulta.errors[:texto_respuesta].present? %>
+    <%# end %>
+    <div class="col-2">
+      <%= f.submit "Enviar", class: 'btn btn-primary btn-sm', data: { title: 'Responder consulta', confirm: '¿Enviar respuesta?' + '<br> <p class="text-danger">Atención: verificar antes de enviar, luego no puede ser modificada.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+    </div>
+  </div>
+  <%= f.hidden_field :respuesta_id, value: consulta_respondida.id, name: 'respuesta_id', id: 'respuesta_id' %>
+<% end %>

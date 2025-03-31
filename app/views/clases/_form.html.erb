@@ -1,0 +1,52 @@
+<%= form_for @clase, :html => { :class => "form-horizontal center" } do |f| %>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :nombre, "Nombre:", class: "col-form-label" %><span class="text-danger"> *</span></div>
+    <div class="col-sm-10">
+      <%= f.text_field :nombre, class: "form-control", maxlength: "150" %>
+      <% if @clase.errors[:nombre].present? %>
+        <p class="text-danger"><%= @clase.errors[:nombre].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :descripcion, "Descripción:", class: "col-form-label" %></div>
+    <div class="col-sm-10">
+      <%= f.text_area :descripcion, class: "form-control", maxlength: "250" %>
+      <% if @clase.errors[:descripcion].present? %>
+        <p class="text-danger"><%= @clase.errors[:descripcion].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :visible, "Visible:", class: "col-form-label" %></div>
+    <div class="col-sm-10">
+      <%= f.check_box :visible, class: "i-checks" %>
+      <% if @clase.errors[:visible].present? %>
+        <p class="text-danger"><%= @clase.errors[:visible].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <% unless current_usuario.profesores? %>
+    <div class="form-group row">
+      <div class="col-sm-2"><%= f.label :fecha_baja, "Fecha Baja:", class: "col-form-label" %></div>
+      <div class="col-sm-10">
+        <% if @clase.fecha_baja.nil? %>
+          <div class="col-form-label"> -</div>
+        <% else %>
+          <div class="col-form-label"><%= @clase.fecha_baja %></div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+    <div class="col-sm-4 col-sm-offset-2">
+      <%= button_tag 'Cancelar', class: "btn btn-secondary btn-sm", type: "submit", name: "cancel", value: true %>
+      <%= f.submit "Guardar", class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+<% end %>

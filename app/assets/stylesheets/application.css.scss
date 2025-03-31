@@ -1,0 +1,16 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * --- Angle Main Stylesheet
+ *
+ *= require site/bootstrap
+ *= require site/app
+ *= require toastr/build/toastr.min.css
+ *= require sweetalert2/dist/sweetalert2.css
+ *
+ * --- Assets paths redefinition
+ *
+ *= require fonts
+ *= require vendor.assets
+ */

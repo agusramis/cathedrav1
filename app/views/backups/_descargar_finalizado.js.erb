@@ -1,0 +1,14 @@
+setTimeout(function () {
+    toastr.success('Copia de seguridad creada, descargando archivo')
+    $("#descargar_progress").css({'visibility': 'hidden'})
+    $("#descargar_button").removeClass("disabled").attr("disabled", false);
+//    $.ajax({
+//        type: 'GET',
+//        url: '/backups/download',
+//        // data: {data: 'you need to pass'}
+//    });
+//    $.get('/backups/download',function () {
+//        console.log('Test descarga')
+//    })
+    window.location = '/backups/download'
+}, 2000);

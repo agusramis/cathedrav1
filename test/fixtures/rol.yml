@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  descripcion: MyText
+  permisos: MyText
+  grupo: MyString
+  fecha_baja: 2019-12-27 23:51:52
+
+two:
+  nombre: MyString
+  descripcion: MyText
+  permisos: MyText
+  grupo: MyString
+  fecha_baja: 2019-12-27 23:51:52

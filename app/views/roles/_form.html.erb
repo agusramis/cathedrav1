@@ -1,0 +1,90 @@
+<%#= form_with(model: rol, local: true) do |form| %>
+<%# if rol.errors.any? %>
+<!--    <div id="error_explanation">-->
+<!--      <h2><%#= pluralize(rol.errors.count, "error") %> prohibited this rol from being saved:</h2>-->
+
+<!--      <ul>-->
+<%# rol.errors.full_messages.each do |message| %>
+<!--        <li><%#= message %></li>-->
+<%# end %>
+<!--      </ul>-->
+<!--    </div>-->
+<%# end %>
+
+<!--  <div class="field">-->
+<%#= form.label :nombre %>
+<%#= form.text_field :nombre %>
+<!--  </div>-->
+
+<!--  <div class="field">-->
+<%#= form.label :descripcion %>
+<%#= form.text_area :descripcion %>
+<!--  </div>-->
+
+<!--  <div class="field">-->
+<%#= form.label :permisos %>
+<%#= form.text_area :permisos %>
+<!--  </div>-->
+
+<!--  <div class="field">-->
+<%#= form.label :grupo %>
+<%#= form.text_field :grupo %>
+<!--  </div>-->
+
+<!--  <div class="actions">-->
+<%#= form.submit %>
+<!--  </div>-->
+<%# end %>
+
+<%= form_for @rol, :html => { :class => "form-horizontal center" } do |f| %>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :codigo, "Nombre:", class: "col-form-label" %><span class="text-danger"> *</span>
+    </div>
+    <div class="col-sm-10">
+      <%= f.text_field :nombre, class: "form-control", maxlength: "30" %>
+      <% if @rol.errors[:nombre].present? %>
+        <p class="text-danger"><%= @rol.errors[:nombre].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :descripcion, "Descripción:", class: "col-form-label" %><span class="text-danger"> *</span></div>
+    <div class="col-sm-10">
+      <%= f.text_area :descripcion, class: "form-control", maxlength: "250" %>
+      <% if @rol.errors[:descripcion].present? %>
+        <p class="text-danger"><%= @rol.errors[:descripcion].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :grupo, "Grupo:", class: "col-form-label" %><span class="text-danger"> *</span></div>
+    <div class="col-sm-10">
+      <%= f.select :grupo, ['Administradores', 'Alumnos', 'Profesores'], { prompt: 'Seleccionar una opción' }, { class: "custom-select", id: "tipo_select" } %>
+      <% if @rol.errors[:grupo].present? %>
+        <p class="text-danger"><%= @rol.errors[:grupo].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :fecha_baja, "Fecha Baja:", class: "col-form-label" %></div>
+    <div class="col-sm-10">
+      <% if @rol.fecha_baja.nil? %>
+        <div class="col-form-label"> -</div>
+      <% else %>
+        <div class="col-form-label"><%= @rol.fecha_baja %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-4 col-sm-offset-2">
+      <%= button_tag 'Cancelar', class: "btn btn-secondary btn-sm", type: "submit", name: "cancel", value: true %>
+      <%= f.submit "Guardar", class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+
+<% end %>

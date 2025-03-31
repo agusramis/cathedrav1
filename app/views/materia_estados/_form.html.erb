@@ -1,0 +1,27 @@
+<%= form_with(model: materia_estado, local: true) do |form| %>
+  <% if materia_estado.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(materia_estado.errors.count, "error") %> prohibited this materia_estado from being saved:</h2>
+
+      <ul>
+      <% materia_estado.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :fecha_desde %>
+    <%= form.datetime_select :fecha_desde %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fecha_hasta %>
+    <%= form.datetime_select :fecha_hasta %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

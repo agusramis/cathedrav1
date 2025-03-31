@@ -1,0 +1,21 @@
+<div class="content-heading">
+  <div>Editar Carrera
+    <small>Editar una carrera.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-title">Formulario Editar Carrera</div>
+      <div class="text-sm">Actualizar los datos de la carrera.<span class="text-danger"> (Los campos marcados con * son obligatorios.)</span>
+        <hr>
+      </div>
+      <%#Card Body%>
+      <div class="card-body">
+        <%= render 'form', materia: @carrera %>
+      </div>
+    </div>
+  </div>
+</div>

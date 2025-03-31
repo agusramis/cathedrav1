@@ -1,0 +1,50 @@
+// Place all the styles related to the Registros controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+//= require datatables.net-bs4/css/dataTables.bootstrap4
+//#= require datatables.net-keytable-bs/css/keyTable.bootstrap
+//= require datatables.net-responsive-bs/css/responsive.bootstrap
+
+// index clase
+
+table.dataTable thead th{
+  white-space: nowrap;
+
+}
+table.dataTable thead tr th{
+  background-color: #3a3f51;
+  color: #e7e6e7;
+}
+
+.modal-header{
+  background-color: #1ca3cd;
+  color: #e7e6e7;
+}
+
+.dd-item > button {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  float: left;
+  width: 25px;
+  height: 30px;
+  margin: 5px 0;
+  padding: 0;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  font-size: 12px;
+  line-height: 1;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+
+div.container6 {
+  height: 10em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

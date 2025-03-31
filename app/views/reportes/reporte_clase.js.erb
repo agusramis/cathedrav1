@@ -1,0 +1,18 @@
+video_alumnodiv = $("#video_alumno div");
+<% if @cantidadclases == 0 %>
+video_alumnodiv.empty().append("Esta materia no clases")
+<% else %>
+video_alumnodiv.empty();
+<% str = "" %>
+<% str += '<div class="row"><div class="col-sm-12"><table class="table table-striped my-4 w-100"><thead class><tr class><th>No vieron la clase</th></tr></thead><tbody>'%>
+<% @alumnosnovieron.sort.each do |alumno| %>
+  <% str += '<tr><td>' + alumno + '</td></tr>'%>
+<% end %>
+<% str += '</tbody></table></div><div class="col-sm-12"><table class="table table-striped my-4 w-100"><thead class><tr class><th>Vieron la clase</th></tr></thead><tbody>'%>
+<% @alumnosvieron.sort.each do |alumno| %>
+  <% str += '<tr><td>' + alumno + '</td></tr>'%>
+<% end %>
+<% str += '</tbody></table></div></div>'%>
+video_alumnodiv.empty().append('<%=  str.html_safe  %>')
+<%# logger.info 'str: ' +str.to_s %>
+<% end %>

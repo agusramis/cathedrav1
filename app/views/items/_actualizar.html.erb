@@ -1,0 +1,19 @@
+<%= form_with model: item, url: actualizar_items_path, method: :post, class: 'form-horizontal col-12', local: true, skip_id: true do |f| %>
+  <%#Agregado name porque sino cambia el nombre al ser llamado desde otra vista y no lo encuentra%>
+  <%#Automaticamente pone el nombre a consulta[clase_id] cuando deberia ser clase_id%>
+  <div class="form-group row">
+    <div class="col-6">
+      <%= f.text_field :titulo, class: 'form-control', placeholder: 'Agregar indice', name: 'titulo', required: true, maxlength: "80" %>
+    </div>
+    <%# if consulta.errors[:texto_consulta].present? %>
+    <!--      <p class="text-danger"><%#= consulta.errors[:texto_consulta].join('. ')  %></p>-->
+    <%# end %>
+    <div class="col-auto">
+      <%= f.time_field :posicion_video, class: 'form-control', style:'display: grid; min-width: max-content', step:1, id:'item'+clase.video.id.to_s, required:true, name: 'posicion_video' %>
+    </div>
+    <div class="col-2">
+      <%= f.submit "Agregar", class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+  <%= f.hidden_field :clase_id, value: clase.id.to_s, name: 'clase_id', id:'clase_id' %>
+<% end %>

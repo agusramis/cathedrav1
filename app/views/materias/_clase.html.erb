@@ -1,0 +1,257 @@
+<div class="card card-default">
+  <div class="card-header bg-dark text-white" id="clase_<%= clase.id.to_s %>">
+    <%= clase.nombre %>
+    <% if current_usuario.profesores? %>
+      <% if clase.profesor == current_usuario %>
+        <%= " (" + "Publicada por mi)" %>
+      <% else %>
+        <%= " (" + "Publicada por " + clase.profesor.nombre + " " + clase.profesor.apellido + ")" %>
+      <% end %>
+    <% end %>
+
+    <a class="float-right" href="#!" data-tool="card-collapse">
+      <%#<a class="float-right" href="#!" data-tool="card-collapse" data-start-collapsed>%>
+      <em class="fa fa-plus"></em>
+    </a>
+
+    <% if current_usuario.profesores? %>
+      <% if clase.visible? %>
+        <%# Tip cuando se utiliza un bloque se debe eliminar el primer argumento de la funcion que indica el texto %>
+        <%# if clase.profesor == current_usuario && clase.materia.Creada? %>
+        <% if clase.materia.Creada? %>
+          <% if permitido?('clases', 'setearvisible') %>
+            <%= link_to setearvisible_clase_url(id: clase.id.to_s), method: :put, title: "Cambiar la visibilidad de la clase", class: "float-right text-success" do %>
+              <em class="fa fa-eye"></em>Visible
+            <% end %>
+          <% else %>
+            <a class="float-right text-success">
+              <em class="fa fa-eye"></em>Visible
+            </a>
+          <% end %>
+        <% else %>
+          <a class="float-right text-success">
+            <em class="fa fa-eye"></em>Visible
+          </a>
+        <% end %>
+      <% else %>
+        <%# if clase.profesor == current_usuario && clase.materia.Creada? %>
+        <% if clase.materia.Creada? %>
+          <%= link_to setearvisible_clase_url(id: clase.id.to_s), method: :put, class: "float-right text-danger" do %>
+            <em class="fa fa-eye-slash"></em>Oculta
+          <% end %>
+        <% else %>
+          <a class="float-right text-danger">
+            <em class="fa fa-eye"></em>Oculta
+          </a>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% if permitido?('clases', 'descargarpdf') %>
+      <%= link_to descargarpdf_clase_url(id: clase.id.to_s), method: :get, title: "Descarga el pdf con las pizarras de la clase.", class: "float-right" do %>
+        <em class="fa fa-file-pdf"></em>Descargar PDF&nbsp;
+      <% end %>
+    <% end %>
+    <% if permitido?('clases', 'edit') && clase.materia.Creada? %>
+      <%= link_to edit_clase_url(id: clase.id.to_s), method: :get, title: "Editar la clase", class: "float-right text-info" do %>
+        <em class="fa fa-edit"></em>Editar&nbsp;
+      <% end %>
+    <% end %>
+  </div>
+
+  <%#Video e indices%>
+
+  <div class="card-wrapper">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-xl-7">
+          <div class="center">
+            <div class="plyr__video-embed" data-plyr-config='{ "id": "player<%= clase.video.id %>" }'>
+              <iframe src="https://www.youtube.com/embed/<%= clase.video.link_video %>?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1" allowfullscreen allowtransparency allow="autoplay"></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-5">
+          <br>
+          <p class="lead">Indice</p>
+          <% if clase.video.items.count > 0 %>
+            <% clase.video.items.order(:posicion_video).each do |item| %>
+              <ul>
+                <li>
+                  <a class="skipto" href="javascript:playerSeekTo('<%= item.posicion_video %>','player<%= clase.video.id %>');"><%= item.posicion_video %></a>
+                  - <%= item.titulo %>
+                  <% if current_usuario.profesores? && clase.profesor == current_usuario && clase.materia.Creada? %>
+                    <% if permitido?('clases', 'edit') %>
+                      <%= link_to 'Eliminar', item_path(item), method: :delete, title: "Eliminar un índice.", data: { title: 'Eliminar índice', confirm: '¿Desea eliminar el índice "' + item.titulo + '" ?' + '<br> <p class="text-danger">Atención: esta acción es irreversible.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+                    <% end %>
+                  <% end %>
+                </li>
+              </ul>
+            <% end %>
+          <% else %>
+            <div class="row">
+              <div class="col-xl-12">
+                <p class="legend">&nbsp;Esta clase no tiene indices.</p>
+              </div>
+            </div>
+          <% end %>
+          <% if current_usuario.profesores? && clase.profesor == current_usuario && clase.materia.Creada? %>
+            <% if permitido?('clases', 'edit') %>
+              <%= render :partial => 'items/actualizar', locals: { clase: clase, item: Item.new } %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <%#Seccion de Descripcion%>
+
+      <div class="row">
+        <div class="col-xl-12">
+          <br>
+          <p class="lead">Descripción</p>
+          <ul>
+            <% if clase.descripcion.blank? %>
+              <li>
+                <span class="consresp"><%= "Creada por " + clase.profesor.nombre + " " + clase.profesor.apellido + " (" + clase.created_at.to_s + ")" %></span>
+              </li>
+              <li>
+                <span class="consresp">Sin descripción.
+                </span>
+            <% else %>
+              <li>
+                <span class="consresp"><%= "Creada por " + clase.profesor.nombre + " " + clase.profesor.apellido + " (" + clase.created_at.to_s + ")" %></span>
+              </li>
+              <li>
+                <span class="consresp"><%= clase.descripcion %></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <%#Seccion de Enlaces%>
+
+      <div class="row">
+        <div class="col-xl-12">
+          <br>
+          <p class="lead">Material adicional</p>
+          <% if clase.enlaces.count > 0 %>
+            <% clase.enlaces.each do |enlace| %>
+              <ul>
+                <li>
+                  <a target="_blank" href="<%= enlace.link_enlace %>"><%= enlace.nombre %></a>
+                  <% if current_usuario.profesores? && clase.profesor == current_usuario && clase.materia.Creada? %>
+                    <% if permitido?('clases', 'edit') %>
+                      <%= link_to 'Eliminar', enlace_path(enlace), method: :delete, title: "Eliminar un indice.", data: { title: 'Eliminar enlace', confirm: '¿Desea eliminar el enlace "' + enlace.nombre + '" ?' + '<br> <p class="text-danger">Atención: esta acción es irreversible.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+                    <% end %>
+                  <% end %>
+                </li>
+              </ul>
+            <% end %>
+          <% else %>
+            <div class="row">
+              <div class="col-xl-12">
+                <p class="legend">&nbsp;Esta clase no tiene material adicional.</p>
+              </div>
+            </div>
+          <% end %>
+          <% if current_usuario.profesores? && clase.profesor == current_usuario && clase.materia.Creada? %>
+            <% if permitido?('clases', 'edit') %>
+              <%= render :partial => 'enlaces/actualizar', locals: { clase: clase, enlace: Enlace.new } %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+
+      <%#Seccion de Consultas%>
+
+      <div class="row">
+        <div class="col-xl-12">
+          <br>
+          <p class="lead">Consultas</p>
+          <%#Realizar nueva consulta%>
+          <% if (current_usuario.profesores? or current_usuario.alumnos?) && clase.materia.Creada? %>
+            <% if permitido?('consultas', 'realizar') or permitido?('consultas', 'aclarar') %>
+              <%= render :partial => 'consultas/realizar', locals: { clase: clase, consulta: Consulta.new } %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <%#Contenedor de consultas realizadas%>
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="container_comments">
+            <ul class="comments">
+              <% if clase.consultas.count > 0 %>
+                <% clase.consultas.order(aclaracion: :desc, id: :asc).each do |consulta| %>
+                  <li class="cmmnt">
+                    <%#Consulta/Aclaracion%>
+                    <div class="avatar">
+                      <a>
+                        <% if consulta.alumno.link_imagen.file.nil? %>
+                          <img src="<%= image_path('site/user/00.jpg') %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+                        <% else %>
+                          <img src="<%= image_path(consulta.alumno.link_imagen.url) %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+                        <% end %>
+                      </a>
+                    </div>
+                    <div class="cmmnt-content" id="<%= "cons_" + consulta.id.to_s %>">
+                      <header>
+                        <a class="userlink"><%= consulta.alumno.nombre %> <%= consulta.alumno.apellido %></a> -
+                        <span class="pubdate"><%= consulta.fecha_consulta %></span> - Posicion:
+                        <a class="skipto" href="javascript:playerSeekTo('<%= consulta.posicion_video %>','player<%= clase.video.id %>');"><%= consulta.posicion_video %></a>
+                        <% if consulta.aclaracion? %>
+                          - <span class="badge-warning"> Aclaración del profesor</span>
+                        <% end %>
+                      </header>
+                      <span class="consresp"><%= consulta.texto_consulta %></span>
+                    </div>
+                    <%#Respuesta%>
+                    <% if consulta.profesor.present? && !consulta.aclaracion? %>
+                      <ul class="replies" id="<%= "resp_" + consulta.id.to_s %>">
+                        <li class="cmmnt">
+                          <div class="avatar">
+                            <a>
+                              <% if consulta.profesor.link_imagen.file.nil? %>
+                                <img src="<%= image_path('site/user/00.jpg') %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+                              <% else %>
+                                <img src="<%= image_path(consulta.profesor.link_imagen.url) %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+                              <% end %>
+                            </a>
+                          </div>
+                          <div class="cmmnt-content">
+                            <header>
+                              <a class="userlink"><%= consulta.profesor.nombre %> <%= consulta.profesor.apellido %></a>
+                              -
+                              <span class="pubdate"><%= consulta.fecha_respuesta %></span>
+                            </header>
+                            <span class="consresp"><%= consulta.texto_respuesta %></span>
+                          </div>
+                        </li>
+                      </ul>
+                    <% else %>
+                      <% if current_usuario.profesores? && !consulta.aclaracion? && clase.materia.Creada? %>
+                        <% if permitido?('consultas', 'responder') %>
+                          <ul class="replies">
+                            <%= render :partial => 'consultas/responder', locals: { consulta_respondida: consulta } %>
+                          </ul>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </li>
+                <% end %>
+              <% else %>
+                <div class="row">
+                  <div class="col-xl-12">
+                    <p class="legend">&nbsp;Esta clase no tiene consultas.</p>
+                  </div>
+                </div>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

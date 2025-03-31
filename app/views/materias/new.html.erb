@@ -1,0 +1,21 @@
+<div class="content-heading">
+  <div>Nueva Materia
+    <small>Crear una nueva materia.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-title">Formulario Nueva Materia</div>
+      <div class="text-sm">Ingresar los datos de la nueva materia.<span class="text-danger"> (Los campos marcados con * son obligatorios.)</span>
+        <hr>
+      </div>
+      <%#Card Body%>
+      <div class="card-body">
+        <%= render 'form', materia: @materia %>
+      </div>
+    </div>
+  </div>
+</div>

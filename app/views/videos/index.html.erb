@@ -1,0 +1,45 @@
+<div class="content-heading">
+  <div>Videos
+    <small>Muestra todos los videos disponibles en la plataforma.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-body whirl standard" id="cardtablebody">
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped my-4 w-100" id="videostable">
+              <thead class>
+              <tr class>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Link</th>
+                <th>Duracion</th>
+                <th>Fecha publicacion</th>
+                <th></th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @videos.each do |video| %>
+                <tr>
+                  <td><%= video.id %></td>
+                  <td><%= video.nombre %></td>
+                  <td><%= video.link_video %></td>
+                  <td><%= video.duracion %></td>
+                  <td><%= video.created_at %></td>
+                  <td><%= link_to 'Mostrar', video, class: "mb-1 btn btn-primary" %></td>
+                  <td><%= link_to 'Editar', edit_video_path(video), class: "mb-1 btn btn-info" %></td>
+                </tr>
+              <% end %>
+              </table>
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

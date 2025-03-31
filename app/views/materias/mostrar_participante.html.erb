@@ -1,0 +1,135 @@
+<div class="">
+  <div style="background-image: url(<%= asset_path 'site/profile-bg2.jpg' %>)" class="bg-cover">
+    <div class="p-4 text-center text-white">
+      <% if @participante.link_imagen.file.nil? %>
+        <img src="<%= image_path('site/user/00.jpg') %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+      <% else %>
+        <img src="<%= image_path(@participante.link_imagen.url) %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+      <% end %>
+      <h3 class="m-0"><%= @participante.nombre + ' ' + @participante.apellido %></h3>
+      <p><%= @participante.rol.nombre %></p>
+    </div>
+  </div>
+  <div class="space-15"><br></div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card card-default">
+        <div class="card-header"></div>
+        <div class="card-body">
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Legajo:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.legajo %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Email:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.email %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "DNI:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.dni %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Fecha de Nacimiento:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.fecha_nacimiento %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Nacionalidad:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.nacionalidad %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Sexo:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.sexo %></div>
+            </div>
+          </div>
+
+          <% if @participante.alumnos? %>
+            <div class="form-group row">
+              <div class="col-sm-4"><%= "Carrera:" %></div>
+              <div class="col-sm-8">
+                <div class="col-form-label"><%= @participante.carrera.nombre %></div>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card card-default">
+        <div class="card-header"></div>
+        <div class="card-body">
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Teléfono:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.telefono %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Celular:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.celular %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Descripción:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.descripcion %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Direccion:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.direccion %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Localidad:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.localidad %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Provincia:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.provincia %></div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4"><%= "Pais:" %></div>
+            <div class="col-sm-8">
+              <div class="col-form-label"><%= @participante.pais %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-primary" href="<%= listar_participantes_materia_path(@materia) %>" role="button">Volver</a>
+    </div>
+  </div>
+</div>

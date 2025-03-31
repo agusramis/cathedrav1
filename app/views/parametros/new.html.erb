@@ -1,0 +1,27 @@
+<!--<h1>New Parametro</h1>-->
+
+<%#= render 'form', parametro: @parametro %>
+
+<%#= link_to 'Back', parametros_path %>
+
+<div class="content-heading">
+  <div>Nueva Par&aacute;metro
+    <small>Crear un nuevo par&aacute;metro.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-title">Formulario Nuevo Par&aacute;metro</div>
+      <div class="text-sm">Ingresar los datos del nuevo par&aacute;metro.<span class="text-danger"> (Los campos marcados con * son obligatorios.)</span>
+        <hr>
+      </div>
+      <%#Card Body%>
+      <div class="card-body">
+        <%= render 'form', materia: @parametro %>
+      </div>
+    </div>
+  </div>
+</div>

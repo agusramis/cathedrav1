@@ -1,0 +1,18 @@
+<%= form_with model: enlace, url: actualizar_enlaces_path, method: :post, class: 'form-horizontal col-12', local: true, skip_id: true do |f| %>
+  <%#Agregado name porque sino cambia el nombre al ser llamado desde otra vista y no lo encuentra%>
+  <%#Automaticamente pone el nombre a consulta[clase_id] cuando deberia ser clase_id%>
+  <div class="form-group row">
+    <div class="col-3">
+      <%= f.text_field :nombre, class: 'form-control', placeholder: 'Ingresar nombre', name: 'nombre', required: true, maxlength: "80" %>
+    </div>
+    <%# if consulta.errors[:texto_consulta].present? %>
+    <%# end %>
+    <div class="col-6">
+      <%= f.text_field :link_enlace, class: 'form-control', placeholder: 'Ingresar enlace', name: 'link_enlace', required: true, maxlength: "250" %>
+    </div>
+    <div class="col-2">
+      <%= f.submit "Agregar", class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+  <%= f.hidden_field :clase_id, value: clase.id.to_s, name: 'clase_id', id:'clase_id' %>
+<% end %>

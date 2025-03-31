@@ -1,0 +1,71 @@
+// Mover toastr para top-center para salir debajo de navbar
+.toast-top-center {
+  margin-top: 60px;
+}
+
+// Borrar el scroll y cuando se achica la ventana
+.sidebar {
+  margin-right: -18px;
+}
+
+// Imagen en el top bar
+.user-block-topbar {
+  padding: 0px 5px 0px;
+  margin: 0;
+  text-align: center;
+
+  > .user-block-topbar-picture {
+    float: none;
+    margin: 0 auto;
+    width: 40px;
+
+    //  > .user-block-topbar-status {
+    //    display: block;
+    //  }
+    //
+    //}
+    //
+    //.user-block-topbar-info {
+    //  display: none;
+  }
+
+}
+
+// Logo Single
+.logo-single {
+  color: #e7e6e7;
+}
+
+
+// Sombra Navbar
+.topnavbar {
+  -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.3);
+  box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.3);
+}
+
+.spoilertext{
+  color: #3a3f51;
+  background-color: #3a3f51;
+}
+
+.spoilertext:hover {
+  color: #656565;
+  background-color:white;
+}
+
+/* para capitalizar cada letra*/
+.capitalize {
+  text-transform: capitalize;
+}
+
+/* en mayusculas */
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+

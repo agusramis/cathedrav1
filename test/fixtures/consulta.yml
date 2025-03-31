@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  posicion_video: MyString
+  fecha_consulta: 2019-08-06 21:57:50
+  texto_consulta: MyText
+  vista_consulta: 2019-08-06 21:57:50
+  fecha_respuesta: 2019-08-06 21:57:50
+  texto_respuesta: MyText
+  vista_respuesta: 2019-08-06 21:57:50
+
+two:
+  posicion_video: MyString
+  fecha_consulta: 2019-08-06 21:57:50
+  texto_consulta: MyText
+  vista_consulta: 2019-08-06 21:57:50
+  fecha_respuesta: 2019-08-06 21:57:50
+  texto_respuesta: MyText
+  vista_respuesta: 2019-08-06 21:57:50

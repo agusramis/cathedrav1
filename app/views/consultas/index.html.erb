@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Consultas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Posicion video</th>
+      <th>Fecha consulta</th>
+      <th>Texto consulta</th>
+      <th>Vista consulta</th>
+      <th>Fecha respuesta</th>
+      <th>Texto respuesta</th>
+      <th>Vista respuesta</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @consultas.each do |consulta| %>
+      <tr>
+        <td><%= consulta.posicion_video %></td>
+        <td><%= consulta.fecha_consulta %></td>
+        <td><%= consulta.texto_consulta %></td>
+        <td><%= consulta.vista_consulta %></td>
+        <td><%= consulta.fecha_respuesta %></td>
+        <td><%= consulta.texto_respuesta %></td>
+        <td><%= consulta.vista_respuesta %></td>
+        <td><%= link_to 'Show', consulta %></td>
+        <td><%= link_to 'Edit', edit_consulta_path(consulta) %></td>
+        <td><%= link_to 'Destroy', consulta, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Consulta', new_consulta_path %>

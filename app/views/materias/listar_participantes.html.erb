@@ -1,0 +1,59 @@
+<div class="content-heading">
+  <div>Listar participantes de <%= @materia.nombre %>
+    <small>Muestra los profesores y alumnos de la materia.
+    </small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <%#Card Body%>
+      <div class="card-body whirl standard" id="cardtablebody">
+        <div class="row">
+          <div class="col">
+            <div class="float-left">
+              <a class="btn btn-primary" href="<%= materia_path(@materia) %>" role="button">Volver</a>
+            </div>
+          </div>
+        </div>
+        <div class="space-15">
+          <br>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped my-4 w-100" id="participantestable">
+              <thead class>
+              <tr class>
+                <th>Tipo</th>
+                <th>Nombre</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @participantes.each do |participante| %>
+                <tr>
+                  <% if participante.profesores? %>
+                    <td><span class="badge badge-pill badge-danger"><%= participante.rol.nombre %></span></td>
+                  <% else %>
+                    <td><span class="badge badge-pill badge-success"><%= participante.rol.nombre %></span></td>
+                  <% end %>
+                  <td><%= participante.nombre + ' ' + participante.apellido %></td>
+                  <td>
+                    <% if permitido?('materias', 'mostrar_participante') && current_usuario.profesores? %>
+                    <%= link_to 'Mostrar', mostrar_participante_path(@materia, participante.id), class: "mb-1 btn btn-primary" %>
+                  <% else %>
+                    <%= link_to 'Mostrar', root_path, class: "mb-1 btn btn-primary disabled" %>
+                  <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              </table>
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

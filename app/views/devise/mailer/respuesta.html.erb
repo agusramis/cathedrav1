@@ -1,0 +1,12 @@
+<p>Hola <%=@consulta.alumno.nombre %></p>
+
+<p>Tienes una respuesta a tu consulta de la clase <%=@consulta.clase.nombre %></p>
+
+<p>Tu consulta:  <%= @consulta.texto_consulta  %></p>
+<p>La respuesta: <%= @consulta.texto_respuesta  %></p>
+
+<p>Profesor: <%= @consulta.profesor.nombre + ' ' + @consulta.profesor.apellido %></p>
+
+<p>Saludos, CathedraBot</p>
+
+<p>No responder este correo.</p>

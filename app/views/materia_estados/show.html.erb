@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha desde:</strong>
+  <%= @materia_estado.fecha_desde %>
+</p>
+
+<p>
+  <strong>Fecha hasta:</strong>
+  <%= @materia_estado.fecha_hasta %>
+</p>
+
+<%= link_to 'Edit', edit_materia_estado_path(@materia_estado) %> |
+<%= link_to 'Back', materia_estados_path %>

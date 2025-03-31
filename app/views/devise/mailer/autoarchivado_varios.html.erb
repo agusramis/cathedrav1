@@ -1,0 +1,15 @@
+<p>Proceso automático de autoarchivado de materias</p>
+<p>Ejecutado el <%= Time.now %></p>
+
+<p>Se autoarchivaron materias</p>
+
+<p>Listado:</p>
+<% numero = 1 %>
+<% @materias.each do |materia| %>
+  <p><%= numero.to_s + ' ... ' + materia.nombre + ' (' + materia.codigo + ')' %></p>
+  <% numero += 1 %>
+<% end %>
+
+<p>Saludos, CathedraBot</p>
+
+<p>No responder este correo.</p>

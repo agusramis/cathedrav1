@@ -1,0 +1,103 @@
+<div class="content-heading">
+  <div>Roles
+    <small>Roles para los diferentes tipos de usuario.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <%#Card Body%>
+      <div class="card-body whirl standard" id="cardtablebody">
+        <div class="row">
+          <div class="col">
+            <div class="float-right">
+              <% if permitido?('roles', 'new') %>
+                <a class="btn btn-primary" href="<%= new_rol_path %>" role="button">Nuevo rol</a>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="space-15">
+          <br>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped my-4 w-100" id="rolestable">
+              <thead class>
+              <tr class>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Grupo</th>
+                <th>Fecha Creación</th>
+                <th>Fecha Modificación</th>
+                <th>Fecha Baja</th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @roles.each do |rol| %>
+                <tr>
+                  <td><%= rol.id %></td>
+                  <td><%= rol.nombre %></td>
+                  <td><%= rol.descripcion %></td>
+                  <td><%= rol.grupo %></td>
+                  <td><%= rol.created_at %></td>
+                  <% if rol.created_at == rol.updated_at %>
+                    <td><%= "-" %></td>
+                  <% else %>
+                    <td><%= rol.updated_at %></td>
+                  <% end %>
+                  <td><%= rol.fecha_baja %></td>
+                  <% if permitido?('roles', 'permisos') %>
+                    <td><%= link_to 'Permisos', permisos_rol_path(rol), class: "mb-1 btn btn-primary" %></td>
+                  <% else %>
+                    <td><a class="mb-1 btn btn-primary disabled">Permisos</a></td>
+                  <% end %>
+                  <% if permitido?('roles', 'edit') %>
+                    <% if rol.nombre != 'Administrador' %>
+                      <td><%= link_to 'Editar', edit_rol_path(rol), class: "mb-1 btn btn-info" %></td>
+                    <% else %>
+                      <td><a class="mb-1 btn btn-info disabled">Editar</a></td>
+                    <% end %>
+                  <% else %>
+                    <td><a class="mb-1 btn btn-info disabled">Editar</a></td>
+                  <% end %>
+                  <td>
+                    <% if permitido?('roles', 'destroy') %>
+                      <% if rol.nombre != 'Administrador' %>
+                        <% if rol.fecha_baja.nil? %>
+                          <%= link_to 'Baja', rol, method: :delete, class: "mb-1 btn btn-warning", data: { title: 'Dar de baja rol', confirm: '¿Estás seguro que quieres dar de baja el rol: ' + rol.nombre + '?', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+                        <% else %>
+                          <%= link_to 'Restaurar', rol, method: :delete, class: "mb-1 btn btn-warning", data: { title: 'Restaurar rol', confirm: '¿Estás seguro que quieres restaurar el rol: ' + rol.nombre + '?', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+                        <% end %>
+                      <% else %>
+                        <% if rol.fecha_baja.nil? %>
+                          <a class="mb-1 btn btn-warning disabled">Baja</a>
+                        <% else %>
+                          <a class="mb-1 btn btn-warning disabled">Restaurar</a>
+                        <% end %>
+                      <% end %>
+                    <% else %>
+                      <% if rol.fecha_baja.nil? %>
+                        <a class="mb-1 btn btn-warning disabled">Baja</a>
+                      <% else %>
+                        <a class="mb-1 btn btn-warning disabled">Restaurar</a>
+                      <% end %>
+                    <% end %>
+
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

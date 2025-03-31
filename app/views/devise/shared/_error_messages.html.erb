@@ -1,0 +1,8 @@
+<% if resource.errors.any? %>
+  <div class="alert alert-danger alert-dismissible animated shake">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <% resource.errors.full_messages.each do |message| %>
+      <strong><%= message %> </strong>
+    <% end %>
+  </div>
+<% end %>

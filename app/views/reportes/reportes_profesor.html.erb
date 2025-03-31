@@ -1,0 +1,101 @@
+<div class="content-heading">
+  <div>Reportes
+    <small></small>
+  </div>
+</div>
+<%#Estadisticas por ciclo lectivo%>
+<div class="row">
+  <div class="col-xl-12">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card card-default card-demo">
+          <div class="card-header">
+            <div class="card-title">Estadísticas por ciclo lectivo / materia</div>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <div class="col-sm-2">
+                <div class="col-form-label">Ciclo Lectivo:</div>
+              </div>
+              <div class="col-sm-4">
+                <%= select_tag :ciclos, options_for_select(current_usuario.materias_profesor.pluck(:ciclo_lectivo).uniq), { include_blank: "Seleccionar un año", class: "custom-select" } %>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-2">
+                <div class="col-form-label">Materia:</div>
+              </div>
+              <div class="col-sm-4">
+                <%= select_tag :materias, ["Seleccionar una materia"].to_s, { include_blank: "Seleccionar una materia", class: "custom-select" } %>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-2">
+                <div class="col-form-label">Clase:</div>
+              </div>
+              <div class="col-sm-4">
+                <%= select_tag :clases, ["Seleccionar una clase"].to_s, { include_blank: "Seleccionar una clase", class: "custom-select" } %>
+              </div>
+            </div>
+
+            <span class="lead"> Estadísticas de materias</span>
+            <div class="text-sm">
+              <hr>
+            </div>
+
+            <div class="row grafico">
+              <div class="col-6 grafico" style="text-align: center; vertical-align: middle;">
+                <span class="lead"> Consultas - Tiempo de respuesta promedio por clase</span>
+                <br/>
+                <div id="tiempo_resp_prom" class="container-box">
+                  <div>Seleccionar una materia.</div>
+                </div>
+              </div>
+              <div class="col-6 grafico" style="text-align: center; vertical-align: middle;">
+                <span class="lead">Consultas - Cantidad por clase</span>
+                <br/>
+                <div id="cons_por_clase" class="container-box">
+                  <div>Seleccionar una materia.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row grafico">
+              <div class="col-6" style="text-align: center; vertical-align: middle;">
+                <span class="lead">Consultas - Cantidad por alumno por clase</span>
+                <br/>
+                <div id="cons_por_alumno" class="container-box">
+                  <div>Seleccionar una materia.</div>
+                </div>
+              </div>
+              <div class="col-6 grafico" style="text-align: center; vertical-align: middle;">
+                <span class="lead">Participación de los alumnos</span>
+                <br/>
+                <div id="respvist_por_alumno" class="container-box">
+                  <div>Seleccionar una materia.</div>
+                </div>
+              </div>
+            </div>
+
+            <%#Estadisticas de clase%>
+
+            <span class="lead"> Estadísticas de clases</span>
+            <div class="text-sm">
+              <hr>
+            </div>
+
+            <div class="row grafico">
+              <div class="col-12 grafico" style="text-align: center; vertical-align: middle;">
+                <span class="lead"> Listado de alumnos que vieron o no la clase</span>
+                <br/>
+                <div id="video_alumno" class="container-box">
+                  <div>Seleccionar una clase.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

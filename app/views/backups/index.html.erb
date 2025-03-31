@@ -1,0 +1,97 @@
+<div class="content-heading">
+  <div>Backups
+    <small>Gestión de copias de seguridad de la plataforma.</small>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-12">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card card-default card-demo">
+          <div class="card-header">
+            <a class="float-right" href="#" data-tool="card-collapse" data-toggle="tooltip" title="">
+              <em class="fa fa-minus"></em>
+            </a>
+            <div class="card-title">Gestión de backups</div>
+          </div>
+          <div class="card-wrapper collapse show">
+            <div class="card-body">
+
+              <div class="form-group row">
+                <div class="col-sm-2">
+                  <div class="col-form-label">Resetear:</div>
+                </div>
+                <div class="col-sm-4">
+                  <% if permitido?('backups', 'resetear') %>
+                    <%#= link_to 'Resetear', resetear_backups_path, method: :post, id: 'resetear_button', title: "Resetear base de datos.", class: 'mb-1 btn btn-danger', data: { title: 'Resetear base de datos', confirm: '¿Desea resetear la base de datos a los valores iniciales?' + '<br> <p class="text-danger">Atención: esta acción es irreversible.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: ''} %>
+                    <button id='resetear_button' class="mb-1 btn btn-danger">Resetear</button>
+                  <% else %>
+                    <td><%= link_to 'Resetear', root_path, class: "mb-1 btn btn-danger disabled" %></td>
+                  <% end %>
+
+                </div>
+                <div id="resetear_progress" class="col-sm-2" style="visibility: hidden">
+                  <span>Reseteando la base de datos, por favor espere.</span>
+                  <div class="ball-clip-rotate">
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-2">
+                  <div class="col-form-label">Cargar desde archivo:</div>
+                </div>
+
+                <% if permitido?('backups', 'cargar') %>
+                  <%= form_with url: cargar_backups_path, html: { multipart: true }, method: :post, class: 'form-horizontal center', local: true, id: 'form_backupload', skip_id: true do |f| %>
+                    <div class="col-sm-8">
+                      <%= f.file_field :backup_archivo, id: "filebackup", required: true %>
+                    </div>
+                    <%#= f.submit "Cargar", id: "cargar_button", class: "mb-1 btn btn-danger", data: { title: 'Restaurar copia de seguridad.', confirm: '¿Desea restaurar la base de datos a partir del archivo seleccionado?' + '<br> <p class="text-danger">Atención: esta acción es irreversible.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: ''} %>
+                    <%#= f.submit "Cargar", id: "cargar_button", class: "mb-1 btn btn-danger" %>
+                    <%#= f.submit "Cargar", style: "display: none;"  %>
+                  <% end %>
+                  <div class="col-sm-2 col-sm-offset-2">
+                    <button id='cargar_button' class="mb-1 btn btn-danger">Cargar</button>
+                  </div>
+                <% else %>
+                  <div class="col-sm-2 col-sm-offset-2">
+                  <%= link_to 'Cargar', root_path, class: "mb-1 btn btn-danger disabled" %>
+                  </div>
+                <% end %>
+
+                <div id="cargar_progress" class="col-sm-2" style="visibility: hidden">
+                  <span>Restaurando la base de datos a partir del archivo, por favor espere.</span>
+                  <div class="ball-clip-rotate">
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-2">
+                  <div class="col-form-label">Descargar a un archivo:</div>
+                </div>
+                <div class="col-sm-4">
+                  <% if permitido?('backups', 'descargar') %>
+                    <button id='descargar_button' class="mb-1 btn btn-danger">Descargar</button>
+                  <% else %>
+                    <td><%= link_to 'Descargar', root_path, class: "mb-1 btn btn-danger disabled" %></td>
+                  <% end %>
+                </div>
+                <div id="descargar_progress" class="col-sm-2" style="visibility: hidden">
+                  <span>Realizando copia de seguridad de la base de datos, por favor espere.</span>
+                  <div class="ball-clip-rotate">
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

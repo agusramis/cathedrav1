@@ -1,0 +1,17 @@
+.highcharts-credits {
+  display: none
+}
+//Centrar vertical y horizontalmente el contenido del div
+.container-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.grafico{
+  //height: 400px;
+  padding: 20px;
+}

@@ -1,0 +1,10 @@
+<p>Hola <%= @resource.nombre + ' ' + @resource.apellido + ' (' + @resource.email + ')' %></p>
+
+<p>Para activar tu cuenta tienes que crear una contraseña, lo puedes hacer haciendo click en el siguiente enlace.</p>
+
+<p><%= link_to 'Setear mi contraseña', edit_password_url(@resource, reset_password_token: @token) %></p>
+
+<p>Para acceder a la plataforma web, tienes que ingresar tu correo y tu contraseña</p>
+<p>Luego puedes cambiar esta contraseña dentro de la plataforma o solicitando un cambio de contraseña en la pantalla de inicio.</p>
+
+<p>No responder este correo.</p>

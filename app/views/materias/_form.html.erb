@@ -1,0 +1,124 @@
+<%= form_for @materia, :html => { :class => "form-horizontal center" } do |f| %>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :nombre, "Nombre:", class: "col-form-label" %><span class="text-danger"> *</span>
+    </div>
+    <div class="col-sm-10">
+      <%= f.text_field :nombre, class: "form-control", maxlength: "150" %>
+      <% if @materia.errors[:nombre].present? %>
+        <p class="text-danger"><%= @materia.errors[:nombre].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :ciclo_lectivo, "Ciclo Lectivo:", class: "col-form-label" %>
+      <span class="text-danger"> *</span></div>
+    <div class="col-sm-10">
+      <%#persisted? sirve para detectar si es update es verdadero, si es new es falso%>
+      <% if @materia.persisted? %>
+        <%= f.telephone_field :ciclo_lectivo, class: "form-control", maxlength: "4", onkeypress: "return event.charCode >= 48 && event.charCode <= 57" %>
+      <% else %>
+        <%= f.telephone_field :ciclo_lectivo, class: "form-control", value: Date.today.year, maxlength: "4", onkeypress: "return event.charCode >= 48 && event.charCode <= 57" %>
+      <% end %>
+
+      <% if @materia.errors[:ciclo_lectivo].present? %>
+        <p class="text-danger"><%= @materia.errors[:ciclo_lectivo].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :carrera_id, "Carrera:", class: "col-form-label" %>
+      <span class="text-danger"> *</span></div>
+    <div class="col-sm-10">
+      <%= f.select :carrera_id, @carreras.pluck(:nombre, :id), { prompt: 'Seleccionar una Carrera' }, { class: "custom-select" } %>
+      <% if @materia.errors[:carrera_id].present? %>
+        <p class="text-danger"><%= @materia.errors[:carrera_id].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :codigo, "Código:", class: "col-form-label" %><span class="text-danger"> *</span>
+    </div>
+    <div class="col-sm-10">
+      <%= f.text_field :codigo, class: "form-control uppercase", maxlength: "16" %>
+      <% if @materia.errors[:codigo].present? %>
+        <p class="text-danger"><%= @materia.errors[:codigo].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :descripcion, "Descripción:", class: "col-form-label" %></div>
+    <div class="col-sm-10">
+      <%= f.text_area :descripcion, class: "form-control", maxlength: "250" %>
+      <% if @materia.errors[:descripcion].present? %>
+        <p class="text-danger"><%= @materia.errors[:descripcion].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :fecha_inicio, "Fecha Inicio:", class: "col-form-label" %>
+      <span class="text-danger"> *</span></div>
+    <div class="col-sm-10">
+      <%= f.date_field :fecha_inicio, class: "form-control" %>
+      <% if @materia.errors[:fecha_inicio].present? %>
+        <p class="text-danger"><%= @materia.errors[:fecha_inicio].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :fecha_fin, "Fecha Fin:", class: "col-form-label" %>
+      <span class="text-danger"> *</span></div>
+    <div class="col-sm-10">
+      <%= f.date_field :fecha_fin, class: "form-control" %>
+      <% if @materia.errors[:fecha_fin].present? %>
+        <p class="text-danger"><%= @materia.errors[:fecha_fin].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :autoarchivar, "Autoarchivar:", class: "col-form-label" %></div>
+    <div class="col-sm-10">
+      <%= f.check_box :autoarchivar, class: "i-checks" %>
+      <% if @materia.errors[:autoarchivar].present? %>
+        <p class="text-danger"><%= @materia.errors[:autoarchivar].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :password, "Contraseña:", class: "col-form-label" %>
+      <span class="text-danger"> *</span></div>
+    <div class="col-sm-10">
+      <%= f.text_field :password, class: "form-control", maxlength: "16" %>
+      <% if @materia.errors[:password].present? %>
+        <p class="text-danger"><%= @materia.errors[:password].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :fecha_baja, "Fecha Baja:", class: "col-form-label" %></div>
+    <div class="col-sm-10">
+      <% if @materia.fecha_baja.nil? %>
+        <div class="col-form-label"> -</div>
+      <% else %>
+        <div class="col-form-label"><%= @materia.fecha_baja %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-4 col-sm-offset-2">
+      <%= button_tag 'Cancelar', class: "btn btn-secondary btn-sm", type: "submit", name: "cancel", value: true %>
+      <%= f.submit "Guardar", class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+<% end %>
+

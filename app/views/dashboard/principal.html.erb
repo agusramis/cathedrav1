@@ -1,0 +1,468 @@
+<div class="content-heading">
+  <div>Mi página principal
+    <small></small>
+  </div>
+</div>
+<%#Pagina principal administrador %>
+<% if current_usuario.administradores? %>
+  <div class="row">
+    <div class="col-xl-3 col-md-6">
+      <!-- START card-->
+      <div class="card flex-row align-items-center align-items-stretch border-0">
+        <div class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
+          <a href="/materias" style="text-decoration: none; color:white"><em class="icon-book-open fa-3x"></em></a>
+        </div>
+        <div class="col-8 py-3 bg-primary rounded-right">
+          <div class="h2 mt-0"><%= @cantidad_materias.to_s %></div>
+          <div class="text-uppercase">Materias</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+      <div class="card flex-row align-items-center align-items-stretch border-0">
+        <div class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
+          <a href="/usuarios" style="text-decoration: none; color:white"><em class="icon-user fa-3x"></em></a>
+        </div>
+        <div class="col-8 py-3 bg-purple rounded-right">
+          <div class="h2 mt-0"><%= @cantidad_usuarios.to_s %>
+          </div>
+          <div class="text-uppercase">Usuarios</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-12">
+      <div class="card flex-row align-items-center align-items-stretch border-0">
+        <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
+          <a href="/carreras" style="text-decoration: none; color:white"><em class="icon-graduation fa-3x"></em></a>
+        </div>
+        <div class="col-8 py-3 bg-green rounded-right">
+          <div class="h2 mt-0"><%= @cantidad_carreras.to_s %></div>
+          <div class="text-uppercase">Carreras</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-12">
+      <div class="card flex-row align-items-center align-items-stretch border-0">
+        <div class="col-4 d-flex align-items-center bg-green justify-content-center rounded-left">
+          <div class="text-center">
+            <div class="text-sm" data-now="" data-format="MMMM"></div>
+            <br/>
+            <div class="h2 mt-0" data-now="" data-format="D"></div>
+          </div>
+        </div>
+        <div class="col-8 py-3 rounded-right">
+          <div class="text-uppercase" data-now="" data-format="dddd"></div>
+          <br/>
+          <div class="h2 mt-0" data-now="" data-format="h:mm"></div>
+          <div class="text-muted text-sm" data-now="" data-format="a"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card card-default card-demo">
+            <div class="card-header">
+              <a class="float-right" href="#" data-tool="card-collapse" data-toggle="tooltip" title="">
+                <em class="fa fa-minus"></em>
+              </a>
+              <div class="card-title"></div>
+            </div>
+            <div class="card-wrapper collapse show">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-4" style="text-align: center; vertical-align: middle;">
+                    <span class="lead">Usuarios por rol</span>
+                    <br/>
+                    <%= bar_chart Usuario.group(:role).count %>
+                  </div>
+                  <div class="col-4" style="text-align: center; vertical-align: middle;">
+                    <span class="lead">Materias según estado</span>
+                    <br/>
+                    <%= bar_chart Materia.group(:estado).count %>
+                  </div>
+                  <div class="col-4" style="text-align: center; vertical-align: middle;">
+                    <span class="lead">Inscripciones por mes</span>
+                    <br/>
+                    <%#= bar_chart Registro.references(Usuario).where(usuario:{role:'Alumno'}).group_by_month(:fecha_inicio, format: "%b %Y").count %>
+                    <%= bar_chart Registro.includes(:usuario).where(usuario: {grupo: 'Alumnos'}).group_by_month(:fecha_inicio, format: "%b %Y").count %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+<% if current_usuario.profesores? %>
+  <div class="container-fluid">
+    <%#Card%>
+    <div class="row">
+      <div class="col-xl-8">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card card-default card-demo">
+              <div class="card-header">
+                <a class="float-right" href="#" data-tool="card-collapse" data-toggle="tooltip" title="">
+                  <em class="fa fa-minus"></em>
+                </a>
+                <div class="card-title">Materias Activas</div>
+              </div>
+              <div class="card-wrapper collapse show">
+                <div class="card-body">
+                  <div class="col-12">
+                    <div class="container-slide">
+                      <% if current_usuario.materias_activas_profesor.count == 0 %>
+                        <input id="rad1" type="radio" name="rad" checked>
+                        <section style="background: #449DF5">
+                          <h1>Sin materias activas</h1>
+                          <label for="rad1"><i class="fa fa-chevron-left" style="color: lightsteelblue; cursor: default"></i></label>
+                          <label for="rad1"><i class="fa fa-chevron-right" style="color: lightsteelblue; cursor: default"></i></label>
+                        </section>
+                      <% else %>
+                        <% total = current_usuario.materias_activas_profesor.count %>
+                        <% counter = 1 %>
+                        <% current_usuario.materias_activas_profesor.order(:id).each do |materia| %>
+                          <input id="rad<%= counter.to_s %>" type="radio" name="rad" <%= (counter == 1) ? "checked" : "" %>>
+                          <section style="background: #449DF5">
+                            <h1>
+                              <a href="/materias/<%= materia.id.to_s %>" title="<%= materia.nombre %>" style="color:#FFF">
+                                <span><%= materia.nombre %></span>
+                              </a>
+                            </h1>
+                            <p><%= materia.descripcion %> </p>
+                            <% if total == 1 %>
+                              <label for="rad<%= counter.to_s %>"><i class="fa fa-chevron-right" style="color: lightsteelblue; cursor: default"></i></label>
+                              <label for="rad<%= counter.to_s %>"><i class="fa fa-chevron-left" style="color: lightsteelblue; cursor: default"></i></label>
+                            <% end %>
+                            <% if total == 2 %>
+                              <% if counter == 1 %>
+                                <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                              <% else %>
+                                <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                              <% end %>
+                            <% end %>
+                            <% if total > 2 %>
+                              <% if counter == 1 %>
+                                <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                <label for="rad<%= (total).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                              <% else
+                                   if counter == total %>
+                                  <label for="rad<%= (1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                  <label for="rad<%= (total - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                <% else
+                                     if counter > 1 or counter < total %>
+                                    <% if (counter + 1) > total %>
+                                      <label for="rad<%= (1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% else %>
+                                      <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% end %>
+                                    <% if (counter - 1) < 1 %>
+                                      <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rad<%= (total).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% else %>
+                                      <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% end %>
+                                  <% end %>
+                                <% end %>
+                              <% end %>
+                            <% end %>
+                          </section>
+                          <% counter += 1 %>
+                        <% end %>
+                        <% counter = 1 %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card card-default card-demo">
+              <div class="card-header">
+                <a class="float-right" href="#" data-tool="card-collapse" data-toggle="tooltip" title="">
+                  <em class="fa fa-minus"></em>
+                </a>
+                <div class="card-title">Materias Archivadas</div>
+              </div>
+              <div class="card-wrapper collapse show">
+                <div class="card-body">
+                  <div class="col-12">
+                    <div class="container-slide">
+                      <% if current_usuario.materias_archivadas_profesor.count == 0 %>
+                        <input id="rada1" type="radio" name="rada" checked>
+                        <section style="background: #449DF5">
+                          <h1>Sin materias archivadas</h1>
+                          <label for="rada1"><i class="fa fa-chevron-left" style="color: lightsteelblue; cursor: default"></i></label>
+                          <label for="rada1"><i class="fa fa-chevron-right" style="color: lightsteelblue; cursor: default"></i></label>
+                        </section>
+                      <% else %>
+                        <% totala = current_usuario.materias_archivadas_profesor.count %>
+                        <% countera = 1 %>
+                        <% current_usuario.materias_archivadas_profesor.order(:id).each do |materia| %>
+                          <input id="rada<%= countera.to_s %>" type="radio" name="rada" <%= (countera == 1) ? "checked" : "" %>>
+                          <section style="background: #449DF5">
+                            <h1>
+                              <a href="/materias/<%= materia.id.to_s %>" title="<%= materia.nombre %>" style="color:#FFF">
+                                <span><%= materia.nombre %></span>
+                              </a>
+                            </h1>
+                            <p><%= materia.descripcion %> </p>
+                            <% if totala == 1 %>
+                              <label for="rada<%= countera.to_s %>"><i class="fa fa-chevron-right" style="color: lightsteelblue; cursor: default"></i></label>
+                              <label for="rada<%= countera.to_s %>"><i class="fa fa-chevron-left" style="color: lightsteelblue; cursor: default"></i></label>
+                            <% end %>
+                            <% if totala == 2 %>
+                              <% if countera == 1 %>
+                                <label for="rada<%= (countera + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                <label for="rada<%= (countera + 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                              <% else %>
+                                <label for="rada<%= (countera - 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                <label for="rada<%= (countera - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                              <% end %>
+                            <% end %>
+                            <% if totala > 2 %>
+                              <% if countera == 1 %>
+                                <label for="rada<%= (countera + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                <label for="rada<%= (totala).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                              <% else
+                                   if countera == totala %>
+                                  <label for="rada<%= (1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                  <label for="rada<%= (totala - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                <% else
+                                     if countera > 1 or countera < totala %>
+                                    <% if (countera + 1) > totala %>
+                                      <label for="rada<%= (1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rada<%= (countera - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% else %>
+                                      <label for="rada<%= (countera + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rada<%= (countera - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% end %>
+                                    <% if (countera - 1) < 1 %>
+                                      <label for="rada<%= (countera + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rada<%= (totala).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% else %>
+                                      <label for="rada<%= (countera + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rada<%= (countera - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% end %>
+                                  <% end %>
+                                <% end %>
+                              <% end %>
+                            <% end %>
+                          </section>
+                          <% countera += 1 %>
+                        <% end %>
+                        <% countera = 1 %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="card card-default">
+          <div class="card-header">
+            <div class="px-2 float-right badge badge-danger"><%= current_usuario.notificaciones.count %></div>
+            <div class="card-title">Consultas de alumnos</div>
+          </div>
+          <div class="list-group" data-height="250" data-scrollable="">
+            <% if current_usuario.notificaciones.count > 0 %>
+              <% current_usuario.notificaciones.each do |consulta| %>
+                <div class="list-group-item list-group-item-action">
+                  <div class="media">
+                    <div class="media-body text-truncate">
+                      <p class="mb-1">
+                        <strong class="text-primary">
+                          <%= link_to verconsulta_consulta_url(consulta.id.to_s), { style: "text-decoration: none" } do %>
+                            <span><%= consulta.clase.materia.nombre %></span>
+                          <% end %>
+                        </strong>
+                      </p>
+                      <p class="mb-1 text-sm"><%= consulta.texto_consulta.first(30) + '...' %></p>
+                    </div>
+                    <div class="ml-auto">
+                      <small class="text-muted ml-2"><%= time_ago_in_words(consulta.fecha_consulta) %></small>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="list-group-item list-group-item-action">
+                <div class="media">
+                  <div class="media-body text-truncate">
+                    <p class="mb-1">
+                      <strong class="text-primary">
+                        <span> No hay consultas nuevas</span>
+                      </strong>
+                    </p>
+                    <p class="mb-1 text-sm"></p>
+                  </div>
+                  <div class="ml-auto">
+                    <small class="text-muted ml-2"></small>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% if current_usuario.alumnos? %>
+  <div class="container-fluid">
+    <%#Card%>
+    <div class="row">
+      <div class="col-xl-8">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card card-default card-demo">
+              <div class="card-header">
+                <a class="float-right" href="#" data-tool="card-collapse" data-toggle="tooltip" title="">
+                  <em class="fa fa-minus"></em>
+                </a>
+                <div class="card-title">Materias Activas</div>
+              </div>
+              <div class="card-wrapper collapse show">
+                <div class="card-body">
+                  <div class="col-12">
+                    <div class="container-slide">
+                      <% if current_usuario.materias_activas_alumno.count == 0 %>
+                        <input id="rad1" type="radio" name="rad" checked>
+                        <section style="background: #449DF5">
+                          <h1>Sin materias activas</h1>
+                          <label for="rad1"><i class="fa fa-chevron-left" style="color: lightsteelblue; cursor: default"></i></label>
+                          <label for="rad1"><i class="fa fa-chevron-right" style="color: lightsteelblue; cursor: default"></i></label>
+                        </section>
+                      <% else %>
+                        <% total = current_usuario.materias_activas_alumno.count %>
+                        <% counter = 1 %>
+                        <% current_usuario.materias_activas_alumno.order(:id).each do |materia| %>
+                          <input id="rad<%= counter.to_s %>" type="radio" name="rad" <%= (counter == 1) ? "checked" : "" %>>
+                          <section style="background: #449DF5">
+                            <h1>
+                              <a href="/materias/<%= materia.id.to_s %>" title="<%= materia.nombre %>" style="color:#FFF">
+                                <span><%= materia.nombre %></span>
+                              </a>
+                            </h1>
+                            <p><%= materia.descripcion %> </p>
+                            <% if total == 1 %>
+                              <label for="rad<%= counter.to_s %>"><i class="fa fa-chevron-right" style="color: lightsteelblue; cursor: default"></i></label>
+                              <label for="rad<%= counter.to_s %>"><i class="fa fa-chevron-left" style="color: lightsteelblue; cursor: default"></i></label>
+                            <% end %>
+                            <% if total == 2 %>
+                              <% if counter == 1 %>
+                                <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                              <% else %>
+                                <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                              <% end %>
+                            <% end %>
+                            <% if total > 2 %>
+                              <% if counter == 1 %>
+                                <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                <label for="rad<%= (total).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                              <% else
+                                   if counter == total %>
+                                  <label for="rad<%= (1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                  <label for="rad<%= (total - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                <% else
+                                     if counter > 1 or counter < total %>
+                                    <% if (counter + 1) > total %>
+                                      <label for="rad<%= (1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% else %>
+                                      <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% end %>
+                                    <% if (counter - 1) < 1 %>
+                                      <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rad<%= (total).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% else %>
+                                      <label for="rad<%= (counter + 1).to_s %>"><i class="fa fa-chevron-right"></i></label>
+                                      <label for="rad<%= (counter - 1).to_s %>"><i class="fa fa-chevron-left"></i></label>
+                                    <% end %>
+                                  <% end %>
+                                <% end %>
+                              <% end %>
+                            <% end %>
+                          </section>
+                          <% counter += 1 %>
+                        <% end %>
+                        <% counter = 1 %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="card card-default">
+          <div class="card-header">
+            <div class="px-2 float-right badge badge-danger"><%= current_usuario.notificaciones.count %></div>
+            <div class="card-title">Respuestas a mis consultas</div>
+          </div>
+          <div class="list-group" data-height="250" data-scrollable="">
+            <% if current_usuario.notificaciones.count > 0 %>
+              <% current_usuario.notificaciones.each do |consulta| %>
+                <div class="list-group-item list-group-item-action">
+                  <div class="media">
+                    <div class="media-body text-truncate">
+                      <p class="mb-1">
+                        <strong class="text-primary">
+                          <%= link_to verconsulta_consulta_url(consulta.id.to_s), { style: "text-decoration: none" } do %>
+                            <span><%= consulta.clase.materia.nombre %></span>
+                          <% end %>
+                        </strong>
+                      </p>
+                      <p class="mb-1 text-sm"><%= consulta.texto_respuesta.first(30) + '...' %></p>
+                    </div>
+                    <div class="ml-auto">
+                      <small class="text-muted ml-2"><%= time_ago_in_words(consulta.fecha_respuesta) %></small>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="list-group-item list-group-item-action">
+                <div class="media">
+                  <div class="media-body text-truncate">
+                    <p class="mb-1">
+                      <strong class="text-primary">
+                        <span> No hay consultas nuevas</span>
+                      </strong>
+                    </p>
+                    <p class="mb-1 text-sm"></p>
+                  </div>
+                  <div class="ml-auto">
+                    <small class="text-muted ml-2"></small>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

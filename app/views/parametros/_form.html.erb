@@ -1,0 +1,41 @@
+<%= form_for @parametro, :html => { :class => "form-horizontal center" } do |f| %>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :nombre, "Nombre:", class: "col-form-label" %></div>
+    <div class="col-sm-10">
+      <%= f.text_field :nombre, class: "form-control", disabled:true %>
+      <% if @parametro.errors[:nombre].present? %>
+        <p class="text-danger"><%= @parametro.errors[:nombre].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :valor, "Valor:", class: "col-form-label" %><span class="text-danger"> *</span></div>
+    <div class="col-sm-10">
+      <%= f.text_field :valor, class: "form-control" %>
+      <% if @parametro.errors[:valor].present? %>
+        <p class="text-danger"><%= @parametro.errors[:valor].join('. ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><%= f.label :fecha_baja, "Fecha Baja:", class: "col-form-label" %></div>
+    <div class="col-sm-10">
+      <% if @parametro.fecha_baja.nil? %>
+        <div class="col-form-label"> -</div>
+      <% else %>
+        <div class="col-form-label"><%= @parametro.fecha_baja %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-4 col-sm-offset-2">
+      <%= button_tag 'Cancelar', class: "btn btn-secondary btn-sm", type: "submit", name: "cancel", value: true %>
+      <%= f.submit "Guardar", class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  valor: MyString
+  fecha_baja: MyString
+
+two:
+  nombre: MyString
+  valor: MyString
+  fecha_baja: MyString

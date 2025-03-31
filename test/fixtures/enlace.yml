@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  link_enlace: MyString
+  fecha_baja: 2019-08-06 21:43:26
+
+two:
+  nombre: MyString
+  link_enlace: MyString
+  fecha_baja: 2019-08-06 21:43:26

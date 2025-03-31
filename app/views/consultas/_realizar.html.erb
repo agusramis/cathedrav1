@@ -1,0 +1,27 @@
+<%= form_with model: consulta, url: realizar_consultas_path, method: :post, class: 'form-horizontal col-12', local: true, skip_id: true do |f| %>
+  <%#Agregado name porque sino cambia el nombre al ser llamado desde otra vista y no lo encuentra%>
+  <%#Automaticamente pone el nombre a consulta[clase_id] cuando deberia ser clase_id%>
+  <div class="form-group row">
+    <div class="col-6">
+      <% if current_usuario.profesores? %>
+        <%= f.text_area :texto_consulta, class: 'form-control', placeholder: 'Ingresar aclaracion', name: 'texto_consulta', maxlength: "250", id: 'field_cons_' + clase.id.to_s, required: true %>
+      <% end %>
+      <% if current_usuario.alumnos? %>
+        <%= f.text_area :texto_consulta, class: 'form-control', placeholder: 'Ingresar consulta', name: 'texto_consulta', maxlength: "250", id: 'field_cons_' + clase.id.to_s, required: true %>
+      <% end %>
+    </div>
+    <%# if consulta.errors[:texto_consulta].present? %>
+    <%# end %>
+    <div class="col-auto">
+      <%= f.time_field :posicion_video, class: 'form-control', style: 'display: grid; min-width: max-content', step: 1, id: 'time' + clase.video.id.to_s, required: true, name: 'posicion_video' %>
+    </div>
+    <div class="col-2">
+      <% if current_usuario.profesores? %>
+        <%= f.submit "Enviar", class: 'btn btn-primary btn-sm', data: { title: 'Aclaración', confirm: '¿Enviar aclaración?' + '<br> <p class="text-danger">Atención: verificar antes de enviar, luego no puede ser modificada.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+      <% else %>
+        <%= f.submit "Enviar", class: 'btn btn-primary btn-sm', data: { title: 'Realizar consulta', confirm: '¿Enviar consulta?' + '<br> <p class="text-danger">Atención: verificar antes de enviar, luego no puede ser modificada.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+      <% end %>
+    </div>
+  </div>
+  <%= f.hidden_field :clase_id, value: clase.id.to_s, name: 'clase_id', id: 'clase_id' %>
+<% end %>

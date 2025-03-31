@@ -1,0 +1,67 @@
+<div class="content-heading">
+  <div>Inscripciones a materias
+    <small>Muestra las materias disponibles para inscribirse.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card card-default center">
+    <div class="card-header">
+      <div class="js-nestable-action">
+        <a class="btn btn-secondary btn-sm mr-1" data-action="expand-all">Expandir todo</a>
+        <a class="btn btn-secondary btn-sm" data-action="collapse-all">Colapsar todo</a>
+      </div>
+      <div class="row">
+        <div class="col-lg-10">
+          <div class="dd" id="nestable">
+            <ol class="dd-list">
+              <% @carreras.each do |carrera| %>
+                <li class="dd-item">
+                  <div class="dd-handle" style="background-color:#3a3f51;color:whitesmoke"><%= carrera.nombre %></div>
+                  <ol class="dd-list">
+                    <% carrera.materias_activas.each do |materia| %>
+                      <li class="dd-item" data-id="<%= materia.id %>" id="materia<%= materia.id %>">
+                        <div class="dd-handle" style="background-color:#1797be;color:whitesmoke"><%= materia.nombre %></div>
+                        <ol class="dd-list">
+                          <li class="dd-item " data-id="<%= materia.id %>">
+                            <div class="dd-handle" style="background-color: #e7f1ff">
+                              <% if current_usuario.tiene_registro_activo(materia.id) %>
+                                <div class="row">
+                                  <div class="col-auto">
+                                    <p>Ya est&aacute;s inscripto</p>
+                                    <a class="btn btn-outline-primary" href="<%= materia_path(materia) %>" role="button">Mostrar
+                                      materia</a>
+                                  </div>
+                                </div>
+                              <% else %>
+                                <%= form_with model: @registro, url: inscribir_materia_registros_path(materia_id: materia.id), method: :post, class: 'form-horizontal col-12', local: true, skip_id: true do |f| %>
+                                  <div class="form-group row">
+                                    <p>Descripci&oacute;n:&nbsp;</p>
+                                    <p><%= materia.descripcion %></p>
+                                  </div>
+                                  <div class="form-group row">
+                                    <div class="col-sm-18"><%= f.password_field :pass_mat, class: "form-control", id: 'pass_mat', name: 'pass_mat', placeholder: 'Ingresar contraseña' %></div>
+                                    <div class="col-sm-4">
+                                      <%= f.submit "Inscribir", class: "btn btn-primary btn-sm" %>
+                                    </div>
+                                  </div>
+                                <% end %>
+                              <% end %>
+                            </div>
+                          </li>
+                        </ol>
+                      </li>
+                    <% end %>
+                  </ol>
+                </li>
+              <% end %>
+            </ol>
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <div class="dd" id="nestable2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

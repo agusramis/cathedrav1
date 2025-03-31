@@ -1,0 +1,210 @@
+<%#START Sidebar (left)%>
+<div class="aside-inner">
+  <nav class="sidebar">
+    <%#START sidebar nav%>
+    <ul class="sidebar-nav">
+      <%#START user info%>
+      <li class="has-user-block">
+        <div id="user-block" class="show">
+          <div class="item user-block">
+            <%#User picture%>
+            <div class="user-block-picture">
+              <div class="user-block-status">
+                <% if current_usuario.link_imagen.file.nil? %>
+                  <img src="<%= image_path('site/user/00.jpg') %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+                <% else %>
+                  <img src="<%= image_path(current_usuario.link_imagen.url) %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+                <% end %>
+              </div>
+            </div>
+            <%#Nombre y rol%>
+            <div class="user-block-info">
+              <span class="user-block-name"><%= current_usuario.nombre + ' ' + current_usuario.apellido %></span>
+              <span class="user-block-role"><%= current_usuario.rol.nombre %></span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <%#END user info%>
+      <%#Perfil-Cerrar Sesion%>
+      <li class="nav-heading">
+        <span>Mi Cuenta</span>
+      </li>
+      <li class="<%= 'active' if current_page?(controller: 'usuarios', action: 'misdatos') %>">
+        <a href="/misdatos" title="Mi perfil">
+          <span>Mis Datos</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="/logout" title="Cerrar sesión">
+          <span>Cerrar Sesi&oacute;n</span>
+        </a>
+      </li>
+      <%#Menu Lateral Administrador%>
+      <% if current_usuario.administradores? %>
+        <li class="nav-heading">
+          <span>Administracion</span>
+        </li>
+        <% if permitido?('usuarios', 'index') %>
+          <li class="<%= 'active' if controller?('usuarios') && !current_page?(controller: 'usuarios', action: 'misdatos') %>">
+            <a href="/usuarios" title="Usuarios">
+              <span>Usuarios</span>
+            </a>
+          </li>
+        <% end %>
+        <% if permitido?('roles', 'index') %>
+          <li class="<%= 'active' if controller?('roles') %>">
+            <a href="/roles" title="Roles">
+              <span>Roles</span>
+            </a>
+          </li>
+        <% end %>
+        <% if permitido?('carreras', 'index') %>
+          <li class="<%= 'active' if controller?('carreras') %>">
+            <a href="/carreras" title="Carreras">
+              <span>Carreras</span>
+            </a>
+          </li>
+        <% end %>
+        <% if permitido?('materias', 'index') %>
+          <li class="<%= 'active' if controller?('materias') or request.path.match('materias\/\d\/registros') or request.path.match('materias\/\d\/materia') or request.path.match('materias\/\d\/clases') or request.path.match('\/clases') %>">
+            <a href="/materias" title="Materias">
+              <span>Materias</span>
+            </a>
+          </li>
+        <% end %>
+        <% if permitido?('registros', 'index') %>
+          <li class="<%= 'active' if controller?('registros') and !request.path.match('materias\/\d\/registros') %>">
+            <a href="/registros" title="Registros">
+              <span>Registros</span>
+            </a>
+          </li>
+        <% end %>
+        <% if permitido?('parametros', 'index') %>
+          <li class="<%= 'active' if controller?('parametros') %>">
+            <a href="/parametros" title="Parámetros">
+              <span>Parámetros</span>
+            </a>
+          </li>
+        <% end %>
+        <% if permitido?('backups', 'index') %>
+          <li class="<%= 'active' if controller?('backups') %>">
+            <a href="/backups" title="Backup">
+              <span>Backups</span>
+            </a>
+          </li>
+        <% end %>
+      <% end %>
+      <%#Menu Lateral Profesor%>
+      <% if current_usuario.profesores? %>
+        <li class="nav-heading">
+          <span>Mis Materias</span>
+        </li>
+        <% activas = false %>
+        <% archivadas = false %>
+        <%#Materias Activas%>
+        <li class="<%= 'active' if activas %>">
+          <a href="#materias_activas" title="Activas" data-toggle="collapse">
+            <span>Activas</span>
+            <em class="fas fa-chevron-down"></em>
+          </a>
+          <ul id="materias_activas" class="sidebar-nav sidebar-subnav collapse <%= 'show' if activas %>">
+            <li class="sidebar-subnav-header">Activas</li>
+            <% if current_usuario.materias_activas_profesor.count == 0 %>
+              <li>
+                <a href="javascript:void(0)" style="cursor: default;">
+                  <span>Sin resultados</span>
+                </a>
+              </li>
+            <% else %>
+              <% current_usuario.materias_activas_profesor.each do |materia| %>
+                <li class="<%= 'active' if request.path.match('\/materias\/' + materia.id.to_s) %>">
+                  <% activas = true, archivadas = false %>
+                  <a href="/materias/<%= materia.id.to_s %>" title="<%= materia.nombre %>">
+                    <span><%= materia.nombre %></span>
+                  </a>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </li>
+        <%#Materias Archivadas%>
+        <li class="<%= 'active' if archivadas %>">
+          <a href="#materias_archivadas" title="Materias archivadas" data-toggle="collapse">
+            <span>Archivadas</span>
+            <em class="fas fa-chevron-down"></em>
+          </a>
+          <ul id="materias_archivadas" class="sidebar-nav sidebar-subnav collapse <%= 'show' if archivadas %>">
+            <li class="sidebar-subnav-header">Archivadas</li>
+            <% if current_usuario.materias_archivadas_profesor.count == 0 %>
+              <li>
+                <a href="javascript:void(0)" style="cursor: default;">
+                  <span>Sin resultados</span>
+                </a>
+              </li>
+            <% else %>
+              <% current_usuario.materias_archivadas_profesor.each do |materia| %>
+                <li class="<%= 'active' if request.path.match('\/materias\/' + materia.id.to_s) %>">
+                  <% activas = false, archivadas = true %>
+                  <a href="/materias/<%= materia.id.to_s %>" title="<%= materia.nombre %>">
+                    <span><%= materia.nombre %></span>
+                  </a>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </li>
+        <%#Reportes%>
+        <% if permitido?('reportes', 'reportes_profesor') %>
+          <li class="<%= 'active' if controller?('reportes') %>">
+            <a href="/reportes" title="Reportes">
+              <span>Reportes</span>
+            </a>
+          </li>
+        <% end %>
+      <% end %>
+      <%#Menu Lateral Alumno%>
+      <% if current_usuario.alumnos? %>
+        <li class="nav-heading">
+          <span>Mis Materias</span>
+        </li>
+        <%#Materias Activas%>
+        <li class="<%= 'active' if controller?('materias') %>">
+          <a href="#materias_activas" title="Muestra las materias en las que estas inscripto." data-toggle="collapse">
+            <span>Actuales</span>
+            <em class="fas fa-chevron-down"></em>
+          </a>
+          <ul id="materias_activas" class="sidebar-nav sidebar-subnav collapse <%= 'show' if controller?('materias') %>">
+            <li class="sidebar-subnav-header">Activas</li>
+            <% if current_usuario.materias_activas_alumno.count == 0 %>
+              <li>
+                <a href="javascript:void(0)" style="cursor: default;">
+                  <span>Sin resultados</span>
+                </a>
+              </li>
+            <% else %>
+              <% current_usuario.materias_activas_alumno.each do |materia| %>
+                <li class="<%= 'active' if request.path.match('\/materias\/' + materia.id.to_s) %>">
+                  <a href="/materias/<%= materia.id.to_s %>" title="<%= materia.nombre %>">
+                    <span><%= materia.nombre %></span>
+                  </a>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </li>
+        <%#Inscripciones%>
+        <% if permitido?('registros', 'inscribir_alumno') %>
+          <li class="<%= 'active' if request.path.match('\/inscripciones') %>">
+            <a href="/inscripciones" title="Para inscribirse en una nueva materia">
+              <span>Inscripciones</span>
+            </a>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+    <%#END sidebar nav%>
+  </nav>
+</div>
+<%#END Sidebar (left)%>

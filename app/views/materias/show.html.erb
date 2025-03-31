@@ -1,0 +1,88 @@
+<div class="content-heading" xmlns:style="http://www.w3.org/1999/xhtml">
+  <div><%= @materia.nombre %>
+    <small></small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-title">
+        <div class="row">
+          <div class="col-sm-12">
+            Información de la materia:
+            <% if @materia.Creada? && current_usuario.profesores? %>
+              <div class="float-right">
+                <% if permitido?('clases', 'new') %>
+                  <a class="btn btn-primary" href="<%= new_materia_clase_path(@materia.id) %>" role="button">Nueva
+                    Clase</a>
+                <% end %>
+                <% if permitido?('materias', 'listar_participantes') %>
+                  <a class="btn btn-primary" href="<%= listar_participantes_materia_path(@materia.id) %>" role="button">Participantes</a>
+                <% end %>
+              </div>
+            <% end %>
+            <% if @materia.Creada? && current_usuario.alumnos? %>
+              <div class="float-right">
+                <% if permitido?('registros', 'desinscribir') %>
+                  <%= link_to 'Desinscribir', desinscribir_materia_registros_path(materia_id: @materia.id), class: "btn btn-warning", data: { title: 'Desinscribir', confirm: '¿Estás seguro que quieres desinscribirte de ' + @materia.nombre + '?', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+                <% end %>
+                <% if permitido?('materias', 'listar_participantes') %>
+                  <a class="btn btn-primary" href="<%= listar_participantes_materia_path(@materia.id) %>" role="button">Participantes</a>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="row text-sm">
+          <div class="col-sm-2">
+            Descripción:
+          </div>
+          <div class="col-sm-10">
+            <%= @materia.descripcion %>
+          </div>
+        </div>
+        <div class="row text-sm">
+          <div class="col-sm-2">
+            Profesores:
+          </div>
+          <div class="col-sm-10">
+            <% if @materia.profesores.count == 0 %>
+              <div class="row">
+                <div class="col-sm-10">
+                  No tiene profesores asignados.
+                </div>
+              </div>
+            <% else %>
+              <% @materia.profesores.each do |profesor| %>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <%= profesor.apellido + ', ' + profesor.nombre + ' (' + profesor.email + ')' %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="text-sm">
+        <hr>
+      </div>
+    </div>
+    <%#Card Body%>
+    <div class="card-body">
+      <% @materia.clases.order(:id).each do |clase| %>
+        <% if clase.fecha_baja.nil? %>
+          <% if current_usuario.alumnos? %>
+            <% if clase.visible? %>
+              <%= render partial: 'clase', locals: { clase: clase } %>
+            <% end %>
+          <% else %>
+            <%= render partial: 'clase', locals: { clase: clase } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

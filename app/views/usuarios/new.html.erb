@@ -1,0 +1,22 @@
+<div class="content-heading">
+  <div>Nuevo Usuario
+    <small>Crear un nuevo usuario.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-title">Formulario Nuevo Usuario</div>
+      <div class="text-sm">Ingresar los datos del nuevo usuario.<span class="text-danger"> (Los campos marcados con * son obligatorios.)</span>
+        <hr>
+      </div>
+      <%#Card Body%>
+      <div class="card-body">
+        <%= render 'form', usuario: @usuario %>
+      </div>
+    </div>
+  </div>
+</div>
+

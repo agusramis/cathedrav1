@@ -1,0 +1,55 @@
+<div class="content-heading">
+  <div>Permisos de <%= @rol.nombre %>
+    <small>Permite editar los permisos para el rol elegido.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <%#Card Body%>
+      <div class="card-body">
+        <div class="space-15">
+          <br>
+        </div>
+
+        <%= form_with model: @rol, url: actualizarpermisos_rol_path(@rol), method: :put, class: 'form-horizontal col-12', local: true do |f| %>
+          <% @rol.permisos.each do |key1, value1| %>
+            <br>
+            <legend class="border-bottom mb-4"> Seccion: <%= traducirpermiso(key1) %></legend>
+            <% value1.each do |key2, value2| %>
+              <% (value2 == 'false') ? value_checked = false : value_checked = true %>
+              <div class="form-group row">
+                <div class="col-sm-4"><%= f.label :autoarchivar, traducirpermiso(key1.to_s + '_' + key2.to_s), class: "col-form-label" %></div>
+                <div class="col-sm-8">
+                  <%#= f.check_box "permisos[" + key1.to_s + "][" + key2.to_s + "]",checked:value_checked,  class: "i-checks" %>
+                  <% if permitido?('roles', 'actualizarpermisos') %>
+                    <% if @rol.nombre == 'Administrador' %>
+                      <%= f.check_box "permisos[" + key1.to_s + "][" + key2.to_s + "]", { checked: value_checked, class: "i-checks", disabled: "true" }, 'true', 'false' %>
+                    <% else %>
+                      <%= f.check_box "permisos[" + key1.to_s + "][" + key2.to_s + "]", { checked: value_checked, class: "i-checks" }, 'true', 'false' %>
+                    <% end %>
+                  <% else %>
+                    <%= f.check_box "permisos[" + key1.to_s + "][" + key2.to_s + "]", { checked: value_checked, class: "i-checks", disabled: "true" }, 'true', 'false' %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+          <div class="form-group row">
+            <div class="col-sm-4 col-sm-offset-2">
+              <%#= button_tag 'Volver', class: "btn btn-secondary btn-sm", type: "submit", name: "cancel", value: true %>
+              <a class="btn btn-primary" href="<%= roles_path %>" role="button">Volver</a>
+              <% unless @rol.nombre == 'Administrador' %>
+                <% if permitido?('roles', 'actualizarpermisos') %>
+                  <%= f.submit "Guardar", class: "btn btn-primary btn-sm" %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

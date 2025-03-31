@@ -1,0 +1,42 @@
+<div class="content-heading">
+  <div>Editar Clase
+    <% if !current_usuario.profesores? %>
+      <small>Editar una clase existente.</small>
+    <% else %>
+      <small>Ingresar los datos a modificar de la clase</small>
+    <% end %>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <% if !current_usuario.profesores? %>
+        <div class="card-title">Formulario Editar Clase</div>
+        <div class="text-sm">Ingresar los datos a modificar de la clase.
+          <span class="text-danger"> (Los campos marcados con * son obligatorios.)</span>
+          <hr>
+        </div>
+      <% end %>
+      <%#Card Body%>
+      <% if current_usuario.profesores? %>
+        <div class="row">
+          <div class="col">
+            <div class="float-right">
+              <% if permitido?('clases', 'borrar') && @clase.profesor == current_usuario%>
+                <%= link_to 'Eliminar', borrar_clase_url(@clase), method: :delete, class: "mb-1 btn btn-warning", data: { title: 'Eliminar clase', confirm: '¿Estás seguro que eliminar la clase ' + @clase.nombre + '?' + '<br> <p class="text-danger">Atención: si eliminas una clase deja de aparecer en la página de la materia.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+            <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="space-15">
+          <br>
+        </div>
+      <% end %>
+      <div class="card-body">
+        <%= render 'form', clase: @clase %>
+      </div>
+    </div>
+  </div>
+</div>

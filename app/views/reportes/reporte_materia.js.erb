@@ -1,0 +1,26 @@
+<% if @cantidadclases == 0 %>
+  $("#tiempo_resp_prom div").empty().append("Esta materia no clases")
+  $("#cons_por_clase div").empty().append("Esta materia no clases")
+  $("#cons_por_alumno div").empty().append("Esta materia no clases")
+  $("#respvist_por_alumno div").empty().append("Esta materia no clases")
+<% else %>
+  <% @clasesmateria.each do |clase| %>
+    $('#clases').append($('<option>').text('<%= j clase.nombre[0, 25] + '...' %>').attr('value', '<%= j clase.nombre %>'));
+  <% end %>
+  <% if @cantidadconsultas == 0 %>
+    $("#tiempo_resp_prom div").empty().append("Esta materia no tiene consultas")
+    $("#cons_por_clase div").empty().append("Esta materia no tiene consultas")
+    $("#cons_por_alumno div").empty().append("Esta materia no tiene consultas")
+  <% else %>
+    $("#tiempo_resp_prom div").empty().append("<%= j bar_chart @promedioporclase, xtitle: "Tiempo (minutos)", ytitle: "Clases" %>");
+    $("#cons_por_clase div").empty().append("<%= j bar_chart @cantidadporclase, xtitle: "Cantidad", ytitle: "Clases" %>");
+    $("#cons_por_alumno div").empty().append("<%= j bar_chart @consultaporalumno, stacked: true, xtitle: "Cantidad", ytitle: "Clases"  %>");
+  <% end %>
+  <% if @cantidadalumnos == 0 %>
+    $("#respvist_por_alumno div").empty().append("Esta materia no tiene alumnos")
+  <% else  %>
+    $("#respvist_por_alumno div").empty().append("<%= j pie_chart @participantespormateria, library: {pieSliceText: 'value'} %>");
+  <% end  %>
+<% end %>
+
+

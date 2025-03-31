@@ -1,0 +1,96 @@
+<div class="content-heading">
+  <% if request.path.match('\/materias\/[\d]\/registros') %>
+    <div>Registros de la materia <%= @materia.nombre %>
+      <small>Muestra los registros de alumnos y profesores de la materia seleccionada.</small>
+    </div>
+  <% else %>
+    <div>Registros
+      <small>Muestra todos los registros</small>
+    </div>
+  <% end %>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-body whirl standard" id="cardtablebody">
+        <div class="row">
+          <div class="col">
+            <% if request.path.match('\/materias\/[\d]\/registros') %>
+              <div class="float-right">
+                <% if permitido?('registros', 'asignar_profesor') && @materia.Creada? %>
+                  <a class="btn btn-primary" href="<%= asignar_profesor_materia_registros_path(@materia) %>" role="button">Asignar
+                    Profesor</a>
+                <% end %>
+                <% if permitido?('registros', 'asignar_alumno') && @materia.Creada? %>
+                  <a class="btn btn-primary" href="<%= asignar_alumno_materia_registros_path(@materia) %>" role="button">Asignar
+                    Alumno</a>
+                <% end %>
+              </div>
+              <div class="float-left">
+                <a class="btn btn-primary" href="<%= materias_path %>" role="button">Volver</a>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+        <div class="space-15">
+          <br>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped my-4 w-100" id="registrostable">
+              <thead class>
+              <tr class>
+                <th>ID</th>
+                <th>Tipo</th>
+                <% unless request.path.match('\/materias\/[\d]\/registros') %>
+                  <th>Materia</th>
+                <% end %>
+                <th>Nombre</th>
+                <th>Legajo</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @registros.each do |registro| %>
+                <tr>
+                  <td><%= registro.id %></td>
+                  <td><%= registro.usuario.rol.nombre %></td>
+                  <% unless request.path.match('\/materias\/[\d]\/registros') %>
+                    <td><%= registro.materia.nombre %></td>
+                  <% end %>
+                  <td><%= registro.usuario.nombre + ' ' + registro.usuario.apellido %></td>
+                  <td><%= registro.usuario.legajo %></td>
+                  <td><%= registro.fecha_inicio %></td>
+                  <td><%= registro.fecha_fin %></td>
+                  <td>
+                    <% if registro.fecha_fin.nil? %>
+                      <% if request.path.match('\/materias\/[\d]\/registros') %>
+                        <% if permitido?('registros', 'destroy') %>
+                          <%= link_to 'Finalizar', materia_registro_path(registro.materia, registro), method: :delete, class: "mb-1 btn btn-warning", data: { title: 'Finalizar', confirm: '¿Est&aacute;s seguro que quieres finalizar el registro del ' + registro.usuario.rol.nombre + ' ' + registro.usuario.nombre + ' ' + registro.usuario.apellido + ' a la materia ' + registro.materia.nombre + '?' + '<br> <p class="text-danger">Atenci&oacute;n: esta acci&oacute;n es irreversible.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+                        <% else %>
+                          <a class="mb-1 btn btn-warning disabled">Finalizar</a>
+                        <% end %>
+                      <% else %>
+                        <% if permitido?('registros', 'destroy') %>
+                          <%= link_to 'Finalizar', materia_registro_path(registro.materia, registro, general: 'si'), method: :delete, class: "mb-1 btn btn-warning", data: { title: 'Finalizar', confirm: '¿Est&aacute;s seguro que quieres finalizar el registro del ' + registro.usuario.rol.nombre + ' ' + registro.usuario.nombre + ' ' + registro.usuario.apellido + ' a la materia ' + registro.materia.nombre + '?' + '<br> <p class="text-danger">Atenci&oacute;n: esta acci&oacute;n es irreversible.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+                        <% else %>
+                          <a class="mb-1 btn btn-warning disabled">Finalizar</a>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              </table>
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

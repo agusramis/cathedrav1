@@ -1,0 +1,62 @@
+<div class="content-heading">
+  <div>Asignar alumnos a <%= @materia.nombre %>
+    <small>Muestra el estado actual de los alumnos en la materia seleccionada y permite asignar otro alumno a la misma.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <%#Card Body%>
+      <div class="card-body whirl standard" id="cardtablebody">
+        <div class="row">
+          <div class="col">
+            <div class="float-left">
+              <a class="btn btn-primary" href="<%= materia_registros_path(@materia) %>" role="button">Volver</a>
+            </div>
+          </div>
+        </div>
+        <div class="space-15">
+          <br>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped my-4 w-100" id="registrostable">
+              <thead class>
+              <tr class>
+                <th>Legajo</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @alumnos.each do |alumno| %>
+                <tr>
+                  <td><%= alumno.legajo %></td>
+                  <td><%= alumno.nombre + ' ' + alumno.apellido %></td>
+                  <td>
+                    <% if alumno.tiene_registro_activo(@materia.id) %>
+                      <span class="badge badge-pill badge-success">Asignado</span>
+                    <% else %>
+                      <span class="badge badge-pill badge-danger">No Asignado</span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if alumno.tiene_registro_activo(@materia.id) %>
+                      <a class="mb-1 btn btn-primary disabled">Asignar</a>
+                    <% else %>
+                      <%= link_to 'Asignar', asignar_a_materia_registros_path(@materia, alumno_id: alumno.id), method: :post, class: "mb-1 btn btn-primary", data: { title: 'Asignar', confirm: '¿Est&aacute;s seguro que quieres asignar al alumno ' + alumno.nombre + ' ' + alumno.apellido + ' a la materia ' + @materia.nombre + '?', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              </table>
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

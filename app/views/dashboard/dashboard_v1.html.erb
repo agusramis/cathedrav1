@@ -1,0 +1,138 @@
+<div class="content-heading">
+   <div>Dashboard
+      <small>Wekcine</small>
+   </div>
+   <!-- START Language list-->
+   <div class="ml-auto">
+      <div class="btn-group">
+         <button class="btn btn-secondary dropdown-toggle dropdown-toggle-nocaret" type="button" data-toggle="dropdown">English</button>
+         <div class="dropdown-menu dropdown-menu-right-forced animated fadeInUpShort" role="menu"><a class="dropdown-item" href="#" data-set-lang="en">English</a><a class="dropdown-item" href="#" data-set-lang="es">Spanish</a>
+         </div>
+      </div>
+   </div>
+   <!-- END Language list-->
+</div>
+<!-- START cards box-->
+<div class="row">
+   <div class="col-xl-3 col-md-6">
+      <!-- START card-->
+      <div class="card flex-row align-items-center align-items-stretch border-0">
+         <div class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
+            <em class="icon-cloud-upload fa-3x"></em>
+         </div>
+         <div class="col-8 py-3 bg-primary rounded-right">
+            <div class="h2 mt-0">1700</div>
+            <div class="text-uppercase">Uploads</div>
+         </div>
+      </div>
+   </div>
+   <div class="col-xl-3 col-md-6">
+     <button class="btn-primary" data-toggle="collapse" data-target="#demo">Collapsible</button>
+     <a class="btn btn-info" onclick="toastr.info('Hi! I am info message.');">Toast</a>
+     <div id="demo" class="collapse">
+       Lorem ipsum dolor text....
+     </div>
+      <!-- START card-->
+      <div class="card flex-row align-items-center align-items-stretch border-0">
+        <div class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
+            <em class="icon-globe fa-3x"></em>
+         </div>
+         <div class="col-8 py-3 bg-purple rounded-right">
+            <div class="h2 mt-0">700
+               <small>GB</small>
+            </div>
+            <div class="text-uppercase">Quota</div>
+         </div>
+      </div>
+   </div>
+   <div class="col-xl-3 col-lg-6 col-md-12">
+      <!-- START card-->
+      <div class="card flex-row align-items-center align-items-stretch border-0">
+         <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
+            <em class="icon-bubbles fa-3x"></em>
+         </div>
+         <div class="col-8 py-3 bg-green rounded-right">
+            <div class="h2 mt-0">500</div>
+            <div class="text-uppercase">Reviews</div>
+         </div>
+      </div>
+   </div>
+   <div class="col-xl-3 col-lg-6 col-md-12">
+      <!-- START date widget-->
+      <div class="card flex-row align-items-center align-items-stretch border-0">
+         <div class="col-4 d-flex align-items-center bg-green justify-content-center rounded-left">
+            <div class="text-center">
+               <!-- See formats: https://docs.angularjs.org/api/ng/filter/date-->
+               <div class="text-sm" data-now="" data-format="MMMM"></div>
+               <br/>
+               <div class="h2 mt-0" data-now="" data-format="D"></div>
+            </div>
+         </div>
+         <div class="col-8 py-3 rounded-right">
+            <div class="text-uppercase" data-now="" data-format="dddd"></div>
+            <br/>
+            <div class="h2 mt-0" data-now="" data-format="h:mm"></div>
+            <div class="text-muted text-sm" data-now="" data-format="a"></div>
+         </div>
+      </div>
+      <!-- END date widget-->
+   </div>
+</div>
+<!-- END cards box-->
+<div class="row">
+   <!-- START dashboard main content-->
+   <div class="col-xl-9">
+      <!-- START chart-->
+      <div class="row">
+         <div class="col-xl-12">
+            <!-- START card-->
+            <div class="card card-default card-demo" id="cardChart9">
+               <div class="card-header">
+                  <a class="float-right" href="#" data-tool="card-refresh" data-toggle="tooltip" title="Refresh card">
+                     <em class="fas fa-sync"></em>
+                  </a>
+                  <a class="float-right" href="#" data-tool="card-collapse" data-toggle="tooltip" title="Collapse card">
+                     <em class="fa fa-minus"></em>
+                  </a>
+                  <div class="card-title">Inbound visitor statistics</div>
+               </div>
+               <div class="card-wrapper collapse show">
+                  <div class="card-body">
+                     <div class="chart-spline flot-chart"></div>
+                  </div>
+               </div>
+            </div>
+            <!-- END card-->
+         </div>
+      </div>
+      <!-- END chart-->
+   </div>
+   <!-- END dashboard main content-->
+   <!-- START dashboard sidebar-->
+   <aside class="col-xl-3">
+      <!-- START loader widget-->
+      <div class="card card-default">
+         <div class="card-body">
+            <a class="text-muted float-right" href="#">
+               <em class="fa fa-arrow-right"></em>
+            </a>
+            <div class="text-info">Average Monthly Uploads</div>
+            <div class="text-center py-4">
+               <div class="easypie-chart easypie-chart-lg" data-easypiechart="data-easypiechart" data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
+               data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="145">
+                  <span>70%</span>
+               </div>
+            </div>
+            <div class="text-center" data-sparkline="" data-bar-color="#23b7e5" data-height="30" data-bar-width="5" data-bar-spacing="2" data-values="5,4,8,7,8,5,4,6,5,5,9,4,6,3,4,7,5,4,7"></div>
+         </div>
+         <div class="card-footer">
+            <p class="text-muted">
+               <em class="fa fa-upload fa-fw"></em>
+               <span>This Month</span>
+               <span class="text-dark">1000 Gb</span>
+            </p>
+         </div>
+      </div>
+   </aside>
+   <!-- END dashboard sidebar-->
+</div>

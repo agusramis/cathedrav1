@@ -1,0 +1,52 @@
+<%= form_with(model: consulta, local: true) do |form| %>
+  <% if consulta.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(consulta.errors.count, "error") %> prohibited this consulta from being saved:</h2>
+
+      <ul>
+      <% consulta.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :posicion_video %>
+    <%= form.text_field :posicion_video %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fecha_consulta %>
+    <%= form.datetime_select :fecha_consulta %>
+  </div>
+
+  <div class="field">
+    <%= form.label :texto_consulta %>
+    <%= form.text_area :texto_consulta %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vista_consulta %>
+    <%= form.datetime_select :vista_consulta %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fecha_respuesta %>
+    <%= form.datetime_select :fecha_respuesta %>
+  </div>
+
+  <div class="field">
+    <%= form.label :texto_respuesta %>
+    <%= form.text_area :texto_respuesta %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vista_respuesta %>
+    <%= form.datetime_select :vista_respuesta %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

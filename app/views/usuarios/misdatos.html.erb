@@ -1,0 +1,232 @@
+<div class="">
+  <div style="background-image: url(<%= asset_path 'site/profile-bg2.jpg' %>)" class="bg-cover">
+    <div class="p-4 text-center text-white">
+      <% if current_usuario.link_imagen.file.nil? %>
+        <img src="<%= image_path('site/user/00.jpg') %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+      <% else %>
+        <img src="<%= image_path(current_usuario.link_imagen.url) %>" alt="Avatar" width="60" height="60" class="img-thumbnail rounded-circle"/>
+      <% end %>
+      <h3 class="m-0"><%= current_usuario.nombre + ' ' + current_usuario.apellido %></h3>
+      <p><%= current_usuario.rol.nombre %></p>
+    </div>
+  </div>
+  <div class="space-15"><br></div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col">
+        <div class="card card-default">
+          <div class="card-header">Datos fijos</div>
+          <div class="card-body">
+            <div class="form-group row">
+              <div class="col-sm-4"><%= "Legajo:" %></div>
+              <div class="col-sm-8">
+                <div class="col-form-label"><%= @usuario.legajo %></div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4"><%= "Email:" %></div>
+              <div class="col-sm-8">
+                <div class="col-form-label"><%= @usuario.email %></div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4"><%= "DNI:" %></div>
+              <div class="col-sm-8">
+                <div class="col-form-label"><%= @usuario.dni %></div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4"><%= "Fecha de Nacimiento:" %></div>
+              <div class="col-sm-8">
+                <div class="col-form-label"><%= @usuario.fecha_nacimiento %></div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4"><%= "Nacionalidad:" %></div>
+              <div class="col-sm-8">
+                <div class="col-form-label"><%= @usuario.nacionalidad %></div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4"><%= "Sexo:" %></div>
+              <div class="col-sm-8">
+                <div class="col-form-label"><%= @usuario.sexo %></div>
+              </div>
+            </div>
+
+            <% if @usuario.alumnos? %>
+              <div class="form-group row">
+                <div class="col-sm-4"><%= "Carrera:" %></div>
+                <div class="col-sm-8">
+                  <div class="col-form-label"><%= @usuario.carrera.nombre %></div>
+                </div>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card card-default">
+          <div class="card-header">Cambiar contraseña</div>
+          <div class="card-body">
+            <%= form_with model: @usuario, url: cambiarpassword_usuario_path(current_usuario), method: :put, class: 'form-horizontal center', local: true, skip_id: true do |f| %>
+              <div class="form-group row">
+                <div class="col-sm-2"><%= f.label :old_password, "Actual:", class: "col-form-label" %></div>
+                <div class="col-sm-10">
+                  <%= f.password_field :old_password, class: "form-control", placeholder: 'Ingresar contraseña actual' %>
+                  <% if @usuario.errors[:old_password].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:old_password].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-2"><%= f.label :new_password, "Nueva:", class: "col-form-label" %></div>
+                <div class="col-sm-10">
+                  <%= f.password_field :new_password, class: "form-control", placeholder: 'Ingresar nueva contraseña' %>
+                  <% if @usuario.errors[:new_password].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:new_password].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-2"><%= f.label :confirm_password, "Confirmar:", class: "col-form-label" %></div>
+                <div class="col-sm-10">
+                  <%= f.password_field :confirm_password, class: "form-control", placeholder: 'Confirmar nueva contraseña' %>
+                  <% if @usuario.errors[:confirm_password].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:confirm_password].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4 col-sm-offset-2">
+                  <%= f.submit "Cambiar", class: "btn btn-primary btn-sm" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="col">
+        <div class="card card-default">
+          <div class="card-header">Datos modificables</div>
+          <div class="card-body">
+            <%= form_with model: @usuario, url: actualizarperfil_usuario_path(current_usuario), html: { multipart: true }, method: :put, class: 'form-horizontal center', local: true, skip_id: true do |f| %>
+
+              <div class="form-group row">
+                <div class="col-xl-8">
+                  <div class="img-container mb-3">
+                    <% if current_usuario.link_imagen.file.nil? %>
+                      <img src="<%= image_path('site/user/00.jpg') %>" alt="picture"/>
+                    <% else %>
+                      <img src="<%= image_path(current_usuario.link_imagen.url) %>" alt="picture"/>
+                    <% end %>
+                  </div>
+                  <label class="btn btn-primary mb-0" for="inputImage" title="subir imagen">
+                    <input class="sr-only" id="inputImage" name="file" type="file" accept="image/*"/>
+                    <span data-toggle="tooltip" title="subir imagen">
+                                <span class="fa fa-upload"></span>
+                             </span>
+                  </label>
+                </div>
+                <%= f.hidden_field :link_imagen %>
+                <div class="col-xl-4">
+                  <div class="docs-preview clearfix">
+                    <div class="img-preview preview-md"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4"><%= f.label :telefono, "Teléfono:", class: "col-form-label" %></div>
+                <div class="col-sm-8">
+                  <%= f.telephone_field :telefono, class: "form-control", maxlength: "20" %>
+                  <% if @usuario.errors[:telefono].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:telefono].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4"><%= f.label :celular, "Celular:", class: "col-form-label" %></div>
+                <div class="col-sm-8">
+                  <%= f.telephone_field :celular, class: "form-control", maxlength: "20" %>
+                  <% if @usuario.errors[:celular].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:celular].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4"><%= f.label :descripcion, "Descripción:", class: "col-form-label" %></div>
+                <div class="col-sm-8">
+                  <%= f.text_area :descripcion, class: "form-control", maxlength: "250" %>
+                  <% if @usuario.errors[:descripcion].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:descripcion].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4"><%= f.label :direccion, "Dirección:", class: "col-form-label" %></div>
+                <div class="col-sm-8">
+                  <%= f.text_field :direccion, class: "form-control capitalize", maxlength: "150" %>
+                  <% if @usuario.errors[:direccion].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:direccion].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4"><%= f.label :localidad, "Localidad:", class: "col-form-label" %></div>
+                <div class="col-sm-8">
+                  <%= f.text_field :localidad, class: "form-control capitalize", maxlength: "90" %>
+                  <% if @usuario.errors[:localidad].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:localidad].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4"><%= f.label :provincia, "Provincia:", class: "col-form-label" %></div>
+                <div class="col-sm-8">
+                  <%= f.text_field :provincia, class: "form-control capitalize", maxlength: "90" %>
+                  <% if @usuario.errors[:provincia].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:provincia].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4"><%= f.label :pais, "Pais:", class: "col-form-label" %></div>
+                <div class="col-sm-8">
+                  <%= f.text_field :pais, class: "form-control capitalize", maxlength: "90" %>
+                  <% if @usuario.errors[:pais].present? %>
+                    <p class="text-danger"><%= @usuario.errors[:pais].join('. ') %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4 col-sm-offset-2">
+                  <%= f.submit "Guardar cambios", class: "btn btn-primary btn-sm" %>
+                </div>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

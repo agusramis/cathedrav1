@@ -1,0 +1,100 @@
+<%# START Top Navbar %>
+<nav class="navbar topnavbar">
+  <%#START navbar header%>
+  <div class="navbar-header">
+    <a class="navbar-brand" href="/">
+      <div class="brand-logo">
+        <img class="img-fluid" src="<%= image_path('site/logo.png') %>" alt="App Logo">
+      </div>
+    </a>
+  </div>
+  <%#END navbar header%>
+  <%#START Left navbar%>
+  <ul class="navbar-nav mr-auto flex-row">
+    <li class="nav-item">
+      <a class="nav-link sidebar-toggle d-md-none" href="#" data-trigger-resize="" data-toggle-state="aside-toggled" data-no-persist="true">
+        <em class="fas fa-bars"></em>
+      </a>
+    </li>
+  </ul>
+  <%#END Left navbar%>
+  <%#START Right Navbar%>
+  <ul class="navbar-nav flex-row">
+    <%#START Alert menu%>
+    <% if current_usuario.rol.grupo!= "Administradores" %>
+      <li class="nav-item dropdown dropdown-list">
+        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-toggle="dropdown">
+          <em class="icon-bell"></em>
+          <%# current_usuario.notificaciones.each do |consulta|  %>
+          <%#= consulta.fecha_respuesta  %>
+          <%# end %>
+          <span class="badge badge-danger"> <%= current_usuario.notificaciones.count %></span>
+        </a>
+        <%#START Dropdown menu%>
+        <div class="dropdown-menu dropdown-menu-right animated fadeIn">
+          <div class="dropdown-item">
+            <div class="list-group">
+              <% if current_usuario.notificaciones.count > 0 %>
+                <% current_usuario.notificaciones.each do |consulta| %>
+                  <% if current_usuario.rol.grupo == "Alumnos" %>
+                    <div class="list-group-item list-group-item-action">
+                      <div class="media">
+                        <div class="align-self-start mr-2">
+                          <em class="far fa-comment-dots fa-2x text-info"></em>
+                        </div>
+                        <div class="media-body">
+                          <%= link_to verrespuesta_consulta_url(consulta.id.to_s), { style: "text-decoration: none" } do %>
+                            <p class="m-0">Respuesta a tu consulta de <%= consulta.clase.materia.nombre %></p>
+                            <p class="m-0 text-muted text-sm"><%= consulta.texto_respuesta.first(30) + '...' %></p>
+                            <p class="m-0 text-muted text-sm"><%= time_ago_in_words(consulta.fecha_respuesta) %></p>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  <% else %>
+                    <div class="list-group-item list-group-item-action">
+                      <div class="media">
+                        <div class="align-self-start mr-2">
+                          <em class="far fa-comment-dots fa-2x text-info"></em>
+                        </div>
+                        <div class="media-body">
+                          <%= link_to verconsulta_consulta_url(consulta.id.to_s), { style: "text-decoration: none" } do %>
+                            <p class="m-0">Tienes una consulta de <%= consulta.clase.materia.nombre %></p>
+                            <p class="m-0 text-muted text-sm"><%= consulta.texto_consulta.first(30) + '...' %></p>
+                            <p class="m-0 text-muted text-sm"><%= time_ago_in_words(consulta.fecha_consulta) %></p>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <div class="list-group-item list-group-item-action">
+                  <div class="media">
+                    <div class="align-self-start mr-2">
+                      <em class="far fa-comment-dots fa-2x text-danger"></em>
+                    </div>
+                    <div class="media-body">
+                      <p class="m-0">Sin notificaciones</p>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <%#END list group%>
+          </div>
+        </div>
+        <%#END Dropdown menu%>
+      </li>
+    <% end %>
+    <%#END Alert menu%>
+    <%#START Offsidebar button%>
+    <li class="nav-item">
+      <div class="col-1">
+      </div>
+    </li>
+    <%#END Offsidebar menu%>
+  </ul>
+  <%#END Right Navbar%>
+</nav>
+<%#END Top Navbar%>

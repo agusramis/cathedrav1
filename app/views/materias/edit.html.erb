@@ -1,0 +1,21 @@
+<div class="content-heading">
+  <div>Editar Materia
+    <small>Editar una materia existente.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <div class="card-title">Formulario Editar Materia</div>
+      <div class="text-sm">Ingresar los datos a modificar de la materia.<span class="text-danger"> (Los campos marcados con * son obligatorios.)</span>
+        <hr>
+      </div>
+      <%#Card Body%>
+      <div class="card-body">
+        <%= render 'form', materia: @materia %>
+      </div>
+    </div>
+  </div>
+</div>

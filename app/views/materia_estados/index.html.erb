@@ -1,0 +1,55 @@
+<div class="content-heading">
+  <div>Estados de la materia <%= @materia.nombre %>
+    <small>Muestra los estados por los que ha pasado la materia.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <div class="card-header">
+      <%#Card Body%>
+      <div class="card-body whirl standard" id="cardtablebody">
+        <div class="row">
+          <div class="col">
+            <div class="float-left">
+              <a class="btn btn-primary" href="<%= materias_path %>" role="button">Volver</a>
+            </div>
+          </div>
+        </div>
+        <div class="space-15">
+          <br>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped my-4 w-100" id="materiaestadostable">
+              <thead class>
+              <tr class>
+                <th>Fecha Desde</th>
+                <th>Fecha Hasta</th>
+                <th>Estado</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @materia_estados.each do |materiaestado| %>
+                <tr>
+                  <td><%= materiaestado.fecha_desde %></td>
+                  <td><%= materiaestado.fecha_hasta %></td>
+                  <td>
+                    <% if materiaestado.Creada? %>
+                      <span class="badge badge-pill badge-success">Creada</span>
+                    <% end %>
+                    <% if materiaestado.Archivada? %>
+                      <span class="badge badge-pill badge-warning">Archivada</span>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              </table>
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

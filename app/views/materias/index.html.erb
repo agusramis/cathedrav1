@@ -1,0 +1,140 @@
+<div class="content-heading">
+  <div>Materias
+    <small>Materias de la institucion.</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <%#Card%>
+  <div class="card card-default">
+    <%#Card Header%>
+    <%#Card Body%>
+    <div class="card-body whirl standard" id="cardtablebody">
+      <div class="row">
+        <div class="col">
+          <div class="float-right">
+            <% if permitido?('materias', 'destroy') %>
+              <%= link_to 'Autoarchivar', autoarchivar_path, method: :post, class: "btn btn-warning", data: { title: 'Autoarchivar materias', confirm: '¿Estás seguro que quieres autoarchivar las materias que puedan autoarchivarse?' + '<br> <p class="text-danger">Atenci&oacute;n: esta acci&oacute;n es irreversible, al archivar una materia se finaliza el registro de todos los alumnos inscriptos en la misma.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+            <% end %>
+            <% if permitido?('materias', 'new') %>
+              <a class="btn btn-primary" href="<%= new_materia_path %>" role="button">Nueva Materia</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="space-15">
+        <br>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-striped my-4 w-100" id="materiastable">
+            <thead class>
+            <tr class>
+              <th>ID</th>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Ciclo Lectivo</th>
+              <th>Descripción</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Autoarchivar</th>
+              <th>Carrera</th>
+              <th>Password</th>
+              <th>Fecha Creación</th>
+              <th>Fecha Modificación</th>
+              <th>Fecha Baja</th>
+              <th>Estado</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @materias.each do |materia| %>
+              <tr>
+                <td><%= materia.id %></td>
+                <td><%= materia.codigo %></td>
+                <td><%= materia.nombre %></td>
+                <td><%= materia.ciclo_lectivo %></td>
+                <td><%= materia.descripcion %></td>
+                <td><%= materia.fecha_inicio %></td>
+                <td><%= materia.fecha_fin %></td>
+                <td>
+                  <% if materia.autoarchivar? %>
+                    <span class="badge badge-pill badge-success">Si</span>
+                  <% else %>
+                    <span class="badge badge-pill badge-danger">No</span>
+                  <% end %>
+                </td>
+                <td><%= materia.carrera.nombre %></td>
+                <td><%= materia.password %></td>
+                <td><%= materia.created_at %></td>
+                <% if materia.created_at == materia.updated_at %>
+                  <td><%= "-" %></td>
+                <% else %>
+                  <td><%= materia.updated_at %></td>
+                <% end %>
+                <td><%= materia.fecha_baja %></td>
+                <td>
+                  <% if materia.Creada? %>
+                    <span class="badge badge-pill badge-success">Creada</span>
+                  <% else
+                       if materia.Archivada? %>
+                      <span class="badge badge-pill badge-warning">Archivada</span>
+                    <% end %>
+                  <% end %>
+                </td>
+                <% if permitido?('clases', 'index') %>
+                  <td><%= link_to 'Clases', materia_clases_path(materia), class: "mb-1 btn btn-primary" %></td>
+                <% else %>
+                  <td><%= link_to 'Clases', root_path, class: "mb-1 btn btn-primary disabled" %></td>
+                <% end %>
+                <% if permitido?('registros', 'index') %>
+                  <td><%= link_to 'Registros', materia_registros_path(materia), class: "mb-1 btn btn-primary" %></td>
+                <% else %>
+                  <td><%= link_to 'Registros', root_path, class: "mb-1 btn btn-primary disabled" %></td>
+                <% end %>
+                <% if permitido?('estados', 'index') %>
+                <td><%= link_to 'Estados', materia_materia_estados_path(materia), class: "mb-1 btn btn-primary" %></td>
+                  <% else %>
+                  <td><%= link_to 'Estados', root_path, class: "mb-1 btn btn-primary disabled" %></td>
+                  <% end %>
+                <% if permitido?('materias', 'show') %>
+                  <td><%= link_to 'Mostrar', materia, class: "mb-1 btn btn-primary" %></td>
+                <% else %>
+                  <td><%= link_to 'Mostrar', root_path, class: "mb-1 btn btn-primary disabled" %></td>
+                <% end %>
+                <% if permitido?('materias', 'edit') %>
+                  <td><%= link_to 'Editar', edit_materia_path(materia), class: "mb-1 btn btn-info" %></td>
+                <% else %>
+                  <td><%= link_to 'Editar', root_path, class: "mb-1 btn btn-info disabled" %></td>
+                <% end %>
+                <td>
+                  <% if materia.Creada? %>
+                    <% if permitido?('materias', 'destroy') %>
+                    <%= link_to 'Archivar', materia, method: :delete, class: "mb-1 btn btn-warning", data: { title: 'Archivar Materia', confirm: '¿Estás seguro que quieres archivar ' + materia.nombre + '?' + '<br> <p class="text-danger">Atenci&oacute;n: esta acci&oacute;n es irreversible, al archivar una materia se finaliza el registro de todos los alumnos inscriptos en la misma.</p>', commit: 'Si', cancel: 'No', "cancel-class": 'mb-1 btn btn-secondary', "commit-class": 'mb-1 btn btn-danger', focus: '' } %>
+                      <% else %>
+                      <a class="mb-1 btn btn-warning disabled">Archivar</a>
+                      <% end %>
+                  <% else
+                       if materia.Archivada? %>
+                      <a class="mb-1 btn btn-warning disabled">Archivar</a>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            </table>
+          </tbody>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
