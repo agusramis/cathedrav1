@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '3.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.3'
+gem 'rails', '7.0'
 
 # gem 'sqlite3', '~> 1.3.6'
 # Use postgresql as the database for Active Record
@@ -60,7 +60,7 @@ gem 'carrierwave-base64'
 gem 'cloudinary'
 gem 'mini_magick'
 # Generar PDF
-gem 'prawn', '~>2.2.0'
+gem 'prawn', '~>2.4.0'
 # Zip
 # gem 'rubyzip'
 gem 'rubyzip', '>= 1.0.0' # will load new rubyzip version
