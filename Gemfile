@@ -11,7 +11,7 @@ gem 'logger'
 gem 'pg', '>= 0.18', '< 2.0'
 # gem 'thin'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 6.4'
 # Use SCSS for stylesheets
 # gem 'sass-rails'
 # gem 'sass-rails', require: false

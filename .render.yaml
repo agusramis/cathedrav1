@@ -2,9 +2,9 @@ services:
   - type: web
     name: cathedrav1
     env: ruby
-    region: oregon # O cambia a la región que prefieras (e.g., frankfurt)
+    region: oregon
     buildCommand: "bundle install"
-    startCommand: "bundle exec rails server -b 0.0.0.0 -p $PORT"
+    startCommand: "bundle exec rails server -b 0.0.0.0 -p $PORT -e production"
     envVars:
       - key: RAILS_ENV
         value: production
@@ -12,3 +12,5 @@ services:
         value: 3000
       - key: RUBY_VERSION
         value: 3.2.2
+      - key: SECRET_KEY_BASE
+        value: "e4af0b4c7aad54fd08cdb91c3503c30d08ec5f0df335d87f583f4bf5e306fb1284eb330d36425053792c8a92cf362c017b8f427ad1d6a3abb5178a02b34224e8"
