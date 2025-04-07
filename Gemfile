@@ -61,6 +61,7 @@ gem 'cloudinary'
 gem 'mini_magick'
 # Generar PDF
 gem 'prawn', '~>2.4.0'
+gem 'matrix'
 # Zip
 # gem 'rubyzip'
 gem 'rubyzip', '>= 1.0.0' # will load new rubyzip version
