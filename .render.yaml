@@ -4,8 +4,8 @@ services:
     env: ruby
     region: oregon
     buildCommand: "bundle install"
+    preDeployCommand: "bundle exec rails db:migrate RAILS_ENV=production"
     startCommand: "bundle exec rails server -b 0.0.0.0 -p $PORT -e production"
-    preDeployCommand: "bundle exec rails db:migrate RAILS_ENV=production" # Agrega esta línea
     envVars:
       - key: RAILS_ENV
         value: production
@@ -17,5 +17,4 @@ services:
         value: "e4af0b4c7aad54fd08cdb91c3503c30d08ec5f0df335d87f583f4bf5e306fb1284eb330d36425053792c8a92cf362c017b8f427ad1d6a3abb5178a02b34224e8"
       - key: DATABASE_URL
         value: "postgresql://cathedrav1_db_user:2vI9hpIJQpT1RzuBuXugiVjx0eyKrvsc@dpg-cvpkm51r0fns7383g42g-a/cathedrav1_db" # Reemplaza con tu URL
-
 
