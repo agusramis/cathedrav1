@@ -4,7 +4,6 @@ services:
     env: ruby
     region: oregon
     buildCommand: "bundle install"
-    preDeployCommand: "bundle exec rails db:migrate RAILS_ENV=production"
     startCommand: "bundle exec rails db:migrate RAILS_ENV=production && bundle exec rails server -b 0.0.0.0 -p $PORT -e production"
     envVars:
       - key: RAILS_ENV

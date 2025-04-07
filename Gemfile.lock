@@ -440,6 +440,7 @@ DEPENDENCIES
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
+  sprockets (~> 4.2.1)
   turbolinks (~> 5)
   tzinfo-data
   uglifier
