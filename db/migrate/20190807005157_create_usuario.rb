@@ -1,6 +1,6 @@
 class CreateUsuario < ActiveRecord::Migration[5.2]
   def change
-    create_table :usuarios do |t|
+    create_table :usuario do |t|
       t.string :nombre_usuario
       t.string :legajo
       t.string :nombre

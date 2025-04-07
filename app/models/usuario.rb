@@ -1,4 +1,5 @@
 class Usuario < ApplicationRecord
+  self.table_name = "usuario"
   include Resetable
   # Carrierwave
   mount_base64_uploader :link_imagen, ImagenUploader
