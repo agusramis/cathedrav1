@@ -2,7 +2,6 @@
 // listed below.
 
 //--- Modernizr
-// = require modernizr
 //--- Storage API
 //= require js-storage/js.storage
 //--- Screenfull
