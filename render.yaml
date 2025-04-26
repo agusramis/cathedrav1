@@ -3,8 +3,8 @@ services:
     name: cathedrav1
     env: ruby
     region: oregon
-    buildCommand: "bundle install"
-    startCommand: "bundle exec rails db:migrate RAILS_ENV=production && bundle exec rails server -b 0.0.0.0 -p $PORT -e production"
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: RAILS_ENV
         value: production
