@@ -80,6 +80,8 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    animate-rails (1.0.10)
+      rails
     api_guard (0.6.0)
       jwt (~> 2.2)
     archive-zip (0.12.0)
@@ -412,6 +414,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  animate-rails
   api_guard
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
