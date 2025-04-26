@@ -78,6 +78,8 @@ gem 'date_validator'
 gem 'icheck-rails'
 # Backup
 gem 'pg_backup'
+gem 'jquery-rails'
+
 
 gem 'font-awesome-rails'
 # gem 'simple-line-icons-rails'
