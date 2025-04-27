@@ -15,6 +15,8 @@ import "./site/custom";
 // Inicializar Rails UJS
 Rails.start();
 
+// Ejemplo: inicializar cosas
+console.log("✅ Webpacker funcionando");
 // Asociar Highcharts con Chartkick
 Chartkick.use(Highcharts);
 HighchartsMore(Highcharts); // Extiende Highcharts para funciones adicionales

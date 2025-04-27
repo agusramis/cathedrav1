@@ -5,8 +5,66 @@ class UsuariosController < ApplicationController
   # GET /usuarios
   # GET /usuarios.json
   def index
-    @usuarios = Usuario.all
+    respond_to do |format|
+      format.html do
+        @usuarios = Usuario.all
+      end
+      format.json do
+        usuarios = Usuario.all
+  
+        # Filtro de búsqueda
+        if params.dig(:search, :value).present?
+          search_value = params.dig(:search, :value)
+          usuarios = usuarios.where('nombre ILIKE :search OR apellido ILIKE :search OR email ILIKE :search', search: "%#{search_value}%")
+        end
+  
+        total_records = Usuario.count
+        filtered_records = usuarios.count
+  
+        # Ordenamiento
+        if params[:order].present?
+          # DataTables envía order[0][column] y order[0][dir]
+          column_index = params.dig(:order, "0", :column).to_i
+          direction = params.dig(:order, "0", :dir) == "desc" ? "DESC" : "ASC"
+  
+          # Mapeamos el índice de columna a nombres reales de columnas en la DB
+          columns = [
+            'id',       # columna 0
+            'nombre',   # columna 1
+            'apellido', # columna 2
+            'email',    # columna 3
+            'role',     # columna 4
+            'grupo',    # columna 5
+            'fecha_baja'# columna 6
+          ]
+  
+          order_column = columns[column_index] || 'id' # default a id si no matchea
+          usuarios = usuarios.order("#{order_column} #{direction}")
+        end
+  
+        # Paginación
+        usuarios = usuarios.offset(params[:start].to_i).limit(params[:length].to_i)
+  
+        render json: {
+          draw: params[:draw].to_i,
+          recordsTotal: total_records,
+          recordsFiltered: filtered_records,
+          data: usuarios.map do |usuario|
+            {
+              id: usuario.id,
+              nombre: usuario.nombre,
+              apellido: usuario.apellido,
+              email: usuario.email,
+              role: usuario.role,
+              grupo: usuario.grupo,
+              fecha_baja: usuario.fecha_baja&.strftime("%d/%m/%Y")
+            }
+          end
+        }
+      end
+    end
   end
+  
 
   # GET /usuarios/1
   # GET /usuarios/1.json

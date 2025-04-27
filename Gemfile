@@ -82,6 +82,7 @@ gem 'icheck-rails'
 gem 'pg_backup'
 gem 'jquery-rails'
 gem 'dotenv-rails'
+gem 'webpacker', '~> 5.4'
 
 
 gem 'font-awesome-rails'
@@ -108,6 +109,7 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
 end
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

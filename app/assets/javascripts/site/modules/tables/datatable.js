@@ -75,7 +75,12 @@
         $("#cardtablebody").removeClass("whirl standard");
       },
     });
-
+    $("#usuariostable").on(
+      "error.dt",
+      function (e, settings, techNote, message) {
+        console.error("❌ DataTables error:", message);
+      }
+    );
     $("#usuariostable").DataTable({
       paging: true, // Table pagination
       ordering: true, // Column ordering
@@ -100,6 +105,20 @@
           visible: false,
           targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20],
         },
+      ],
+      processing: true, // <-- Agregado: muestra spinner de forma correcta
+      serverSide: true, // <-- Agregado: usa backend para paginar/buscar/ordenar
+      ajax: "/usuarios.json", // <-- Agregado: fuente de datos
+
+      columns: [
+        // <-- Agregado: mapea columnas con los datos del JSON
+        { data: "id" },
+        { data: "nombre" },
+        { data: "apellido" },
+        { data: "email" },
+        { data: "role" },
+        { data: "grupo" },
+        { data: "fecha_baja" },
       ],
       buttons: [
         {

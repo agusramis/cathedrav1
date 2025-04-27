@@ -16,3 +16,10 @@ log/development.log
 log/test.log
 log/production.log
 log/*.log
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
