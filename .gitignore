@@ -1,1 +1,18 @@
 .env
+.vscode
+/node_modules/
+/tmp/
+# Ignorar archivos generados dinámicamente
+public/uploads/
+public/cache/
+public/tmp/
+
+# No ignorar archivos estáticos
+!public/stylesheets/
+!public/images/
+!public/javascripts/
+# Ignorar archivos de log, incluidos los logs de desarrollo
+log/development.log
+log/test.log
+log/production.log
+log/*.log

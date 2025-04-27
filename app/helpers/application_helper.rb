@@ -19,12 +19,11 @@ module ApplicationHelper
   end
 
   def permitido?(seccion, accion)
+    logger.info 'Permisos' +' '+ current_usuario.rol.permisos.to_s
+    logger.info 'Seccion' +' '+ seccion
+    logger.info 'Resultado' +' '+ current_usuario.rol.permisos.has_key?(seccion).to_s
     if current_usuario.rol.permisos.has_key?(seccion)
-      if current_usuario.rol.permisos[seccion.to_sym][accion.to_sym] == 'true'
-        true
-      else
-        false
-      end
+      current_usuario.rol.permisos[seccion.to_sym][accion.to_sym] == true
     else
       false
     end

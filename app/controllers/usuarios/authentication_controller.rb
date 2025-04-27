@@ -42,7 +42,7 @@ module Usuarios
     def permitido?(seccion, accion)
       usuario = Usuario.find(resource.id)
       if usuario.rol.permisos.has_key?(seccion)
-        if usuario.rol.permisos[seccion.to_sym][accion.to_sym] == 'true'
+        if usuario.rol.permisos[seccion.to_sym][accion.to_sym] == true
           true
         else
           false

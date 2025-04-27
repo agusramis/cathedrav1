@@ -1,16 +1,24 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * --- Angle Main Stylesheet
- *
- *= require site/bootstrap
- *= require site/app
- *= require toastr/build/toastr.min.css
- *= require sweetalert2/dist/sweetalert2.css
- *
- * --- Assets paths redefinition
- *
- *= require fonts
- *= require vendor.assets
+ * Main application stylesheet
+ * This file will be compiled into application.css
+ * and should include all your main stylesheets.
  */
+
+/* --- Libraries --- */
+@import "toastr/build/toastr.min.css";
+@import "sweetalert2/dist/sweetalert2.css";
+
+/* --- Core Styles --- */
+@import "site/bootstrap";
+@import "site/app";
+
+/* --- Assets paths redefinition --- */
+@import "fonts";
+@import "vendor.assets";
+
+/* --- Custom modules (optional) --- */
+/* 
+Si más adelante querés agregar módulos específicos:
+@import "site/modules/alguno";
+@import "site/custom/otro";
+*/
