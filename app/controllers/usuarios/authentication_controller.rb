@@ -41,13 +41,27 @@ module Usuarios
 
     def permitido?(seccion, accion)
       usuario = Usuario.find(resource.id)
-      if usuario.rol.permisos.has_key?(seccion)
-        if usuario.rol.permisos[seccion.to_sym][accion.to_sym] == true
-          true
-        else
-          false
-        end
+      permisos = usuario&.rol&.permisos
+    
+      if permisos.blank?
+        Rails.logger.warn "[AUTH CONTROLLER PERMISOS] Usuario #{usuario.id} sin permisos cargados."
+        return false
+      end
+    
+      seccion_permisos = permisos[seccion.to_s] || permisos[seccion.to_sym]
+    
+      if seccion_permisos.blank?
+        Rails.logger.warn "[AUTH CONTROLLER PERMISOS] Usuario #{usuario.id} no tiene sección: #{seccion}."
+        return false
+      end
+    
+      permiso = seccion_permisos[accion.to_s] || seccion_permisos[accion.to_sym]
+    
+      if permiso
+        Rails.logger.info "[AUTH CONTROLLER PERMISOS] ✅ Usuario #{usuario.id} tiene permiso para #{seccion}.#{accion}."
+        true
       else
+        Rails.logger.warn "[AUTH CONTROLLER PERMISOS] ❌ Usuario #{usuario.id} NO tiene permiso para #{seccion}.#{accion}."
         false
       end
     end

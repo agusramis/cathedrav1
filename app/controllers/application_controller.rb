@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
         # Si el usuario tiene la accion
         if current_usuario.rol.permisos[params[:controller].to_s].has_key?(params[:action].to_s)
           logger.info 'Tiene la accion'
-          unless current_usuario.rol.permisos[params[:controller].to_s][params[:action].to_s] == 'true'
+          unless current_usuario.rol.permisos[params[:controller].to_s][params[:action].to_s].present?
             logger.info 'no tiene permiso habilitado'
             flash.alert = 'La dirección a la que intentas acceder no existe'
             redirect_to root_path
@@ -39,9 +39,9 @@ class ApplicationController < ActionController::Base
         else
           # Si no tiene la accion
           logger.info 'No tiene la accion'
-          if (params[:action].to_s == 'update' || params[:action.to_s] == 'put') && current_usuario.rol.permisos[params[:controller].to_s]['edit'] == 'true'
+          if (params[:action].to_s == 'update' || params[:action.to_s] == 'put') && current_usuario.rol.permisos[params[:controller].to_s]['edit'].present?
           else
-            if (params[:action].to_s == 'create') && current_usuario.rol.permisos[params[:controller].to_s]['new'] == 'true'
+            if (params[:action].to_s == 'create') && current_usuario.rol.permisos[params[:controller].to_s]['new'].present?
             else
               flash.alert = 'La dirección a la que intentas acceder no existe'
               redirect_to root_path

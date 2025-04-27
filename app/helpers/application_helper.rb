@@ -19,12 +19,28 @@ module ApplicationHelper
   end
 
   def permitido?(seccion, accion)
-    logger.info 'Permisos' +' '+ current_usuario.rol.permisos.to_s
-    logger.info 'Seccion' +' '+ seccion
-    logger.info 'Resultado' +' '+ current_usuario.rol.permisos.has_key?(seccion).to_s
-    if current_usuario.rol.permisos.has_key?(seccion)
-      current_usuario.rol.permisos[seccion.to_sym][accion.to_sym] == true
+    usuario = current_usuario
+    permisos = usuario&.rol&.permisos
+  
+    if permisos.blank?
+      Rails.logger.warn "[HELPER PERMISOS] Usuario #{usuario&.id} sin permisos cargados."
+      return false
+    end
+  
+    seccion_permisos = permisos[seccion.to_s] || permisos[seccion.to_sym]
+  
+    if seccion_permisos.blank?
+      Rails.logger.warn "[HELPER PERMISOS] Usuario #{usuario.id} no tiene sección: #{seccion}."
+      return false
+    end
+  
+    permiso = seccion_permisos[accion.to_s] || seccion_permisos[accion.to_sym]
+  
+    if permiso
+      Rails.logger.info "[HELPER PERMISOS] ✅ Usuario #{usuario.id} tiene permiso para #{seccion}.#{accion}."
+      true
     else
+      Rails.logger.warn "[HELPER PERMISOS] ❌ Usuario #{usuario.id} NO tiene permiso para #{seccion}.#{accion}."
       false
     end
   end

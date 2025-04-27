@@ -49,6 +49,7 @@ ActiveRecord::Base.transaction do
     rol = Rol.find_or_initialize_by(nombre: attrs[:nombre])
     rol.update!(attrs.merge(permisos: attrs[:permisos]))
   end
+  
 
   puts "✨ Creando parámetros..."
   Parametro.find_or_create_by!(nombre: 'IDClient') do |p|
@@ -204,10 +205,7 @@ ActiveRecord::Base.transaction do
       role: user_attrs[:rol].nombre,
       grupo: user_attrs[:rol].grupo,
       carrera: user_attrs[:carrera]
-      reset_password_token: nil,
-      reset_password_sent_at: nil,
-      remember_created_at: nil,
-      fecha_baja:nil
+
     )
     user.save!
   end

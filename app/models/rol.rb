@@ -23,4 +23,8 @@ class Rol < ApplicationRecord
   def restaurar
     update_attribute(:fecha_baja, nil)
   end
+
+  def permisos
+    super&.with_indifferent_access
+  end
 end
