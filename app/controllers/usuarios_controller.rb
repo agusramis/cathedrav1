@@ -12,7 +12,7 @@ class UsuariosController < ApplicationController
       format.json do
         usuarios = Usuario.all
   
-        # Filtro de búsqueda
+        # Paginación, búsqueda y ordenamiento que ya tenías
         if params.dig(:search, :value).present?
           search_value = params.dig(:search, :value)
           usuarios = usuarios.where('nombre ILIKE :search OR apellido ILIKE :search OR email ILIKE :search', search: "%#{search_value}%")
@@ -21,28 +21,21 @@ class UsuariosController < ApplicationController
         total_records = Usuario.count
         filtered_records = usuarios.count
   
-        # Ordenamiento
         if params[:order].present?
-          # DataTables envía order[0][column] y order[0][dir]
           column_index = params.dig(:order, "0", :column).to_i
           direction = params.dig(:order, "0", :dir) == "desc" ? "DESC" : "ASC"
   
-          # Mapeamos el índice de columna a nombres reales de columnas en la DB
           columns = [
-            'id',       # columna 0
-            'nombre',   # columna 1
-            'apellido', # columna 2
-            'email',    # columna 3
-            'role',     # columna 4
-            'grupo',    # columna 5
-            'fecha_baja'# columna 6
+            'id', 'nombre_usuario', 'legajo', 'nombre', 'apellido', 'dni', 'email',
+            'telefono', 'celular', 'descripcion', 'fecha_nacimiento', 'sexo',
+            'nacionalidad', 'direccion', 'localidad', 'provincia', 'pais',
+            'rol', 'carrera', 'created_at', 'updated_at', 'fecha_baja'
           ]
   
-          order_column = columns[column_index] || 'id' # default a id si no matchea
+          order_column = columns[column_index] || 'id'
           usuarios = usuarios.order("#{order_column} #{direction}")
         end
   
-        # Paginación
         usuarios = usuarios.offset(params[:start].to_i).limit(params[:length].to_i)
   
         render json: {
@@ -52,18 +45,37 @@ class UsuariosController < ApplicationController
           data: usuarios.map do |usuario|
             {
               id: usuario.id,
+              nombre_usuario: usuario.nombre_usuario,
+              legajo: usuario.legajo,
               nombre: usuario.nombre,
               apellido: usuario.apellido,
+              dni: usuario.dni,
               email: usuario.email,
-              role: usuario.role,
-              grupo: usuario.grupo,
-              fecha_baja: usuario.fecha_baja&.strftime("%d/%m/%Y")
+              telefono: usuario.telefono,
+              celular: usuario.celular,
+              descripcion: usuario.descripcion,
+              fecha_nacimiento: usuario.fecha_nacimiento&.strftime("%d/%m/%Y"),
+              sexo: usuario.sexo,
+              nacionalidad: usuario.nacionalidad,
+              direccion: usuario.direccion,
+              localidad: usuario.localidad,
+              provincia: usuario.provincia,
+              pais: usuario.pais,
+              rol: usuario.rol&.nombre,
+              carrera: (usuario.rol&.grupo == 'Alumnos' ? usuario.carrera&.nombre : "-"),
+              created_at: usuario.created_at&.strftime("%d/%m/%Y %H:%M"),
+              updated_at: usuario.updated_at&.strftime("%d/%m/%Y %H:%M"),
+              fecha_baja: usuario.fecha_baja&.strftime("%d/%m/%Y"),
+              mostrar_url: Rails.application.routes.url_helpers.usuario_path(usuario),
+              editar_url: Rails.application.routes.url_helpers.edit_usuario_path(usuario),
+              baja_url: Rails.application.routes.url_helpers.usuario_path(usuario)
             }
           end
-        }
+        }        
       end
     end
   end
+  
   
 
   # GET /usuarios/1

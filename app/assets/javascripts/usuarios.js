@@ -18,126 +18,116 @@
 //= require cropper/dist/cropper.js
 
 $(document).ready(function () {
+  // $('.my-image').croppie({
+  //     enforceBoundary: false,
+  //     viewport: {
+  //         width: 60,
+  //         height: 60
+  //     },
+  //     boundary: {
+  //         width: 150,
+  //         height: 150
+  //     }
+  // });
 
-    // $('.my-image').croppie({
-    //     enforceBoundary: false,
-    //     viewport: {
-    //         width: 60,
-    //         height: 60
-    //     },
-    //     boundary: {
-    //         width: 150,
-    //         height: 150
-    //     }
-    // });
-
-
-    $('.i-checks').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue'
+  $(".i-checks").iCheck({
+    checkboxClass: "icheckbox_square-blue",
+    radioClass: "iradio_square-blue",
+  });
+  // if ($('#tipo_select').val() == '3') {
+  //     $('#carrera_select').show();
+  // } else {
+  //     $('#carrera_select').hide();
+  // }
+  $("#tipo_select").change(function () {
+    $.ajax({
+      type: "POST",
+      url: "/grupo_alumnos",
+      data: { rol_id: $("#tipo_select").val() },
+      dataType: "json",
+      success: function (data) {
+        if (data.bool == "true") {
+          $("#carrera_select").show();
+        } else {
+          $("#carrera_select").hide();
+        }
+      },
+      error: function (request, status, error) {
+        // alert("sin materias:"+status);
+      },
     });
+
     // if ($('#tipo_select').val() == '3') {
     //     $('#carrera_select').show();
     // } else {
     //     $('#carrera_select').hide();
     // }
-    $('#tipo_select').change(function () {
-        $.ajax({
-            type: 'POST',
-            url: '/grupo_alumnos',
-            data: {rol_id: $('#tipo_select').val()},
-            dataType: "json",
-            success: function (data) {
-                if(data.bool == "true")
-                {
-                    $('#carrera_select').show();
-                }
-                else
-                {
-                    $('#carrera_select').hide();
-                }
-            },
-            error: function (request, status, error) {
-                // alert("sin materias:"+status);
-            },
-        });
-
-        // if ($('#tipo_select').val() == '3') {
-        //     $('#carrera_select').show();
-        // } else {
-        //     $('#carrera_select').hide();
-        // }
-    })
+  });
 });
 
-
-$('#usuario_email').keyup(function () {
-    $('#usuario_email').val($('#usuario_email').val().toLowerCase());
-    $('#usuario_nombre_usuario').val($('#usuario_email').val());
+$("#usuario_email").keyup(function () {
+  $("#usuario_email").val($("#usuario_email").val().toLowerCase());
+  $("#usuario_nombre_usuario").val($("#usuario_email").val());
 });
 
-$('#usuario_dni').focusout(function () {
-    $('#usuario_dni').val(zeroPad($('#usuario_dni').val(), 8));
+$("#usuario_dni").focusout(function () {
+  $("#usuario_dni").val(zeroPad($("#usuario_dni").val(), 8));
 });
 
-$('#usuario_legajo').focusout(function () {
-    $('#usuario_legajo').val(zeroPad($('#usuario_legajo').val(), 8));
+$("#usuario_legajo").focusout(function () {
+  $("#usuario_legajo").val(zeroPad($("#usuario_legajo").val(), 8));
 });
 
 function zeroPad(num, numZeros) {
-    var n = Math.abs(num);
-    var zeros = Math.max(0, numZeros - Math.floor(n).toString().length);
-    var zeroString = Math.pow(10, zeros).toString().substr(1);
-    if (num < 0) {
-        zeroString = '-' + zeroString;
-    }
-    return zeroString + n;
+  var n = Math.abs(num);
+  var zeros = Math.max(0, numZeros - Math.floor(n).toString().length);
+  var zeroString = Math.pow(10, zeros).toString().substr(1);
+  if (num < 0) {
+    zeroString = "-" + zeroString;
+  }
+  return zeroString + n;
 }
 
-function caplet(str){
-    str = str.split(" ");
-    for (let i = 0, x = str.length; i < x; i++) {
-        if (str[i].length > 3){
-            str[i] = str[i][0].toUpperCase() + str[i].substr(1);
-        }
-        else{
-            // str[i] = str[i][0] + str[i].substr(1);
-        }
+function caplet(str) {
+  str = str.split(" ");
+  for (let i = 0, x = str.length; i < x; i++) {
+    if (str[i].length > 3) {
+      str[i] = str[i][0].toUpperCase() + str[i].substr(1);
+    } else {
+      // str[i] = str[i][0] + str[i].substr(1);
     }
-    return str.join(" ");
+  }
+  return str.join(" ");
 }
 
-
-
-
-$('#usuario_nombre').keyup(function() {
-    $('#usuario_nombre').val(caplet($('#usuario_nombre').val()));
+$("#usuario_nombre").keyup(function () {
+  $("#usuario_nombre").val(caplet($("#usuario_nombre").val()));
 });
 
-$('#usuario_apellido').keyup(function() {
-    $('#usuario_apellido').val(caplet($('#usuario_apellido').val()));
+$("#usuario_apellido").keyup(function () {
+  $("#usuario_apellido").val(caplet($("#usuario_apellido").val()));
 });
 
-$('#usuario_nacionalidad').keyup(function() {
-    $('#usuario_nacionalidad').val(caplet($('#usuario_nacionalidad').val()));
+$("#usuario_nacionalidad").keyup(function () {
+  $("#usuario_nacionalidad").val(caplet($("#usuario_nacionalidad").val()));
 });
 
-$('#usuario_pais').keyup(function() {
-    $('#usuario_pais').val(caplet($('#usuario_pais').val()));
+$("#usuario_pais").keyup(function () {
+  $("#usuario_pais").val(caplet($("#usuario_pais").val()));
 });
 
-$('#usuario_pais').keyup(function() {
-    $('#usuario_pais').val(caplet($('#usuario_pais').val()));
+$("#usuario_pais").keyup(function () {
+  $("#usuario_pais").val(caplet($("#usuario_pais").val()));
 });
 
-$('#usuario_provincia').keyup(function() {
-    $('#usuario_provincia').val(caplet($('#usuario_provincia').val()));
+$("#usuario_provincia").keyup(function () {
+  $("#usuario_provincia").val(caplet($("#usuario_provincia").val()));
 });
 
-$('#usuario_direccion').keyup(function() {
-    $('#usuario_direccion').val(caplet($('#usuario_direccion').val()));
+$("#usuario_direccion").keyup(function () {
+  $("#usuario_direccion").val(caplet($("#usuario_direccion").val()));
 });
 
-$('#usuario_localidad').keyup(function() {
-    $('#usuario_localidad').val(caplet($('#usuario_localidad').val()));
+$("#usuario_localidad").keyup(function () {
+  $("#usuario_localidad").val(caplet($("#usuario_localidad").val()));
 });

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       get :download
     end
   end
-  resources :roles, constraints: { format: :html } do
+  resources :roles do
     member do
       get :permisos
       put :actualizarpermisos
@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       get :verconsulta
     end
   end
-  resources :usuarios, constraints: { format: :html } do
+  resources :usuarios do
     member do
       put :actualizarperfil
       put :cambiarpassword

@@ -18,7 +18,8 @@
   <%= csp_meta_tag %>
   <%# Para que funcione chartkick hay que incluirlo en el head %>
   <%= javascript_include_tag 'Chart.bundle', 'chartkick' %>
-
+  <%= javascript_pack_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_pack_tag "site", "data-turbo-track": "reload" %>
 </head>
 <%# Collapsed Text %>
 <%#<body class="aside-collapsed-text layout-fixed">%>
@@ -55,7 +56,8 @@
 <%= javascript_include_tag params[:controller] %>
 <%= yield :vendor_js_area %>
 <%#=============== APP SCRIPTS ===============%>
-<%= javascript_pack_tag "application", "data-turbo-track": "reload" %>
+
+
 <%= custom_bootstrap_flash %>
 <%= yield :body_area %>
 

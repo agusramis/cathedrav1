@@ -9,20 +9,18 @@
 
 /// index materia
 
-table.dataTable thead th{
+table.dataTable thead th {
   white-space: nowrap;
-
 }
-table.dataTable thead tr th{
+table.dataTable thead tr th {
   background-color: #3a3f51;
   color: #e7e6e7;
 }
 
-.modal-header{
+.modal-header {
   background-color: #1ca3cd;
   color: #e7e6e7;
 }
-
 
 // show materia
 
@@ -53,7 +51,6 @@ table.dataTable thead tr th{
   min-height: max-content;
 }
 
-
 /* comments area */
 
 .comments {
@@ -77,8 +74,8 @@ ul ul .cmmnt {
   position: absolute;
   top: 8px;
   left: 0;
-  height:45px;
-  width:45px;
+  height: 45px;
+  width: 45px;
 }
 
 .comments .cmmnt .avatar img {
@@ -106,7 +103,7 @@ ul ul .cmmnt {
 }
 
 .comments .cmmnt .cmmnt-content header {
-  font-size: 1.0em;
+  font-size: 1em;
   display: block;
   margin-bottom: 8px;
 }
@@ -125,7 +122,9 @@ ul ul .cmmnt {
 
 //tab pane
 
-* {box-sizing: border-box}
+* {
+  box-sizing: border-box;
+}
 
 /* Style the tab */
 .tab {
@@ -172,10 +171,10 @@ ul ul .cmmnt {
 
 /* Video */
 
-.plyr__video-embed iframe {
-  top: -50%;
-  height: 200%;
-}
+// .plyr__video-embed iframe {
+//   top: -50%;
+//   height: 200%;
+// }
 //
 //html {
 //  scroll-behavior: smooth;

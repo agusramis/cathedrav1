@@ -15,31 +15,30 @@
 //= require 'icheck'
 
 $(document).ready(function () {
-    $('.i-checks').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue'
-    });
-// Funcion para scrollear suave para los links
-    window.scrollBy({
-        top: -60, // es el tamaño del navbartop
-        left: 0,
-        behavior: 'smooth'
-    });
+  $(".i-checks").iCheck({
+    checkboxClass: "icheckbox_square-blue",
+    radioClass: "iradio_square-blue",
+  });
+  // Funcion para scrollear suave para los links
+  window.scrollBy({
+    top: -60, // es el tamaño del navbartop
+    left: 0,
+    behavior: "smooth",
+  });
 });
 
-function caplet(str){
-    str = str.split(" ");
-    for (let i = 0, x = str.length; i < x; i++) {
-        if (str[i].length > 3){
-            str[i] = str[i][0].toUpperCase() + str[i].substr(1);
-        }
-        else{
-            // str[i] = str[i][0] + str[i].substr(1);
-        }
+function caplet(str) {
+  str = str.split(" ");
+  for (let i = 0, x = str.length; i < x; i++) {
+    if (str[i].length > 3) {
+      str[i] = str[i][0].toUpperCase() + str[i].substr(1);
+    } else {
+      // str[i] = str[i][0] + str[i].substr(1);
     }
-    return str.join(" ");
+  }
+  return str.join(" ");
 }
 
-$('#rol_nombre').keyup(function() {
-    $('#rol_nombre').val(caplet($('#rol_nombre').val()));
+$("#rol_nombre").keyup(function () {
+  $("#rol_nombre").val(caplet($("#rol_nombre").val()));
 });
